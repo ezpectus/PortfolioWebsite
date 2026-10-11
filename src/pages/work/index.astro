@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import WorkTable from "../../components/WorkTable.astro";
 import site from "../../data/site.json";
+import { u } from "../../utils/url";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const featured = projects.map((p) => ({
@@ -11,7 +12,7 @@ const featured = projects.map((p) => ({
   year: p.data.year,
   stack: p.data.stack.slice(0, 3).join(" · "),
   metric: p.data.metric,
-  href: `/work/${p.id}/`,
+  href: u(`work/${p.id}/`),
   glyph: p.data.diagram,
 }));
 
@@ -30,7 +31,7 @@ const archive = site.archive.map((r) => ({
   description="Full index of public work: flagship case studies, tools, archives and coursework."
 >
   <div class="mx-auto max-w-[1120px] px-5 pt-14">
-    <p class="mono"><a href="/" class="hover:text-ink">← Index</a> / Project index</p>
+    <p class="mono"><a href={u("/")} class="hover:text-ink">← Index</a> / Project index</p>
     <h1 class="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
       All work
     </h1>

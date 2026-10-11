@@ -32,6 +32,9 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
+    env:
+      # project pages serve at /<repo>/ — keep in sync if the repo is renamed
+      DEPLOY_BASE: /PortfolioWebsite
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

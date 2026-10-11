@@ -7,6 +7,7 @@ import TimelineStrip from "../components/TimelineStrip.astro";
 import PipelineDiagram from "../components/PipelineDiagram.astro";
 import WorkTable from "../components/WorkTable.astro";
 import site from "../data/site.json";
+import { u } from "../utils/url";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const workRows = projects.map((p) => ({
@@ -14,7 +15,7 @@ const workRows = projects.map((p) => ({
   year: p.data.year,
   stack: p.data.stack.slice(0, 3).join(" · "),
   metric: p.data.metric,
-  href: `/work/${p.id}/`,
+  href: u(`work/${p.id}/`),
   glyph: p.data.diagram,
 }));
 
@@ -30,14 +31,14 @@ const aiArtifacts = [
     label: "Product",
     title: "forgeai",
     text: "Prompt-to-live-URL generator — ~15s to a deployed site with a database, ~$0.002 per generation. BYOK, self-hostable, MIT.",
-    href: "/work/forgeai/",
+    href: u("work/forgeai/"),
     hrefLabel: "case study →",
   },
   {
     label: "Discipline",
     title: "Slop audit",
     text: "My standing rule: assume AI output is hollow until proven otherwise. Trace the data, count the stubs, check that 'services' aren't one-line returns. Documented as a reusable workflow.",
-    href: "/work/guarddog/",
+    href: u("work/guarddog/"),
     hrefLabel: "the gate →",
   },
 ];
@@ -67,7 +68,7 @@ const aiArtifacts = [
             class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
             >Selected work ↓</a
           >
-          <a href={site.cv} class="mono hover:text-ink">CV ↓</a>
+          <a href={u(site.cv)} class="mono hover:text-ink">CV ↓</a>
           <a href={site.links.github} class="mono hover:text-ink" rel="me">github.com/ezpectus ↗</a>
           <a href={site.links.linkedin} class="mono hover:text-ink" rel="me">LinkedIn ↗</a>
         </div>
@@ -150,7 +151,7 @@ const aiArtifacts = [
     <div class="mt-10">
       <WorkTable rows={workRows} numbered />
     </div>
-    <a href="/work/" class="mono mt-6 inline-block text-accent-deep hover:underline">
+    <a href={u("work/")} class="mono mt-6 inline-block text-accent-deep hover:underline">
       Full project index → /work
     </a>
   </section>

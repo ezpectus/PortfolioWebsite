@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { u } from "../utils/url";
 ---
 
 <BaseLayout title="404 — Denys Stepanenko" description="Page not found.">
@@ -12,7 +13,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       This route doesn't exist. The index does — everything worth seeing is one click away.
     </p>
     <a
-      href="/"
+      href={u("/")}
       class="mt-10 inline-block border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
       >← Back to index</a
     >

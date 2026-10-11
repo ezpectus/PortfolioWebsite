@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Diagram from "../components/Diagram.astro";
+import { u } from "../utils/url";
 
 interface Props {
   entry: CollectionEntry<"projects">;
@@ -15,7 +16,7 @@ const d = entry.data;
   <article class="mx-auto max-w-[1120px] px-5">
     <header class="border-b border-line pb-10 pt-14">
       <p class="mono">
-        <a href="/#work" class="hover:text-ink">← Selected work</a>
+        <a href={u("/#work")} class="hover:text-ink">← Selected work</a>
         <span class="mx-2">/</span>
         <span class="text-accent-deep">{String(d.order).padStart(2, "0")}</span>
       </p>
