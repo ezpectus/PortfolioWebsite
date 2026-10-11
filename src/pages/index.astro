@@ -82,7 +82,12 @@ const aiArtifacts = [
               ["status", "open to SWE / backend roles"],
               ["work auth", "UK — no sponsorship"],
             ].map(([k, v], i, arr) => (
-              <div class:list={["flex gap-4 px-4 py-3", { "border-b border-line": i < arr.length - 1 }]}>
+              <div
+                class:list={[
+                  "flex gap-4 px-4 py-3",
+                  { "border-b border-line": i < arr.length - 1 },
+                ]}
+              >
                 <span class="mono w-[5.5rem] shrink-0">{k}</span>
                 <span class="font-mono text-xs break-all text-ink">{v}</span>
               </div>
@@ -109,7 +114,7 @@ const aiArtifacts = [
       read, audited and pushed through a gate. The model gives speed; the process gives correctness.
     </p>
 
-    <div class="mt-10 border border-line p-6 sm:p-10">
+    <div class="dgm-scroll mt-10 border border-line p-6 sm:p-10">
       <PipelineDiagram />
     </div>
 

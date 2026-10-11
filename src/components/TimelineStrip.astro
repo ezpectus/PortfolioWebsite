@@ -25,49 +25,51 @@ const bottom = y(rows.length - 1) + 10;
 ---
 
 <figure class="border border-line p-5 sm:p-8">
-  <svg
-    viewBox="0 0 760 310"
-    class="h-auto w-full"
-    role="img"
-    aria-label="Commit activity windows per project, July 2025 to October 2026, drawn from the GitHub commits API"
-  >
-    <!-- month grid -->
-    {
-      MONTHS.map((m, i) => (
-        <g>
-          <line x1={bx(i)} y1={top} x2={bx(i)} y2={bottom + 14} class="dgm-line" />
-          <text x={bx(i) + M / 2} y={bottom + 32} text-anchor="middle" class="dgm-sm">
-            {m}
-          </text>
-        </g>
-      ))
-    }
-    <line x1={X1} y1={top} x2={X1} y2={bottom + 14} class="dgm-line" />
+  <div class="dgm-scroll">
+    <svg
+      viewBox="0 0 760 310"
+      class="h-auto w-full"
+      role="img"
+      aria-label="Commit activity windows per project, July 2025 to October 2026, drawn from the GitHub commits API"
+    >
+      <!-- month grid -->
+      {
+        MONTHS.map((m, i) => (
+          <g>
+            <line x1={bx(i)} y1={top} x2={bx(i)} y2={bottom + 14} class="dgm-line" />
+            <text x={bx(i) + M / 2} y={bottom + 32} text-anchor="middle" class="dgm-sm">
+              {m}
+            </text>
+          </g>
+        ))
+      }
+      <line x1={X1} y1={top} x2={X1} y2={bottom + 14} class="dgm-line"></line>
 
-    <!-- year markers -->
-    <text x={bx(0) + 2} y={top - 8} class="dgm-sm dgm-ink">2025</text>
-    <text x={bx(6) + 2} y={top - 8} class="dgm-sm dgm-ink">2026</text>
+      <!-- year markers -->
+      <text x={bx(0) + 2} y={top - 8} class="dgm-sm dgm-ink">2025</text>
+      <text x={bx(6) + 2} y={top - 8} class="dgm-sm dgm-ink">2026</text>
 
-    {
-      rows.map((r, i) => (
-        <g>
-          <text x={X0 - 12} y={y(i) + 3} text-anchor="end" class="dgm-sm">
-            {r.label}
-          </text>
-          <rect
-            x={bx(r.s)}
-            y={y(i) - 4}
-            width={Math.max((r.e - r.s + 1) * M, 4)}
-            height="8"
-            class={r.label === "hft-simulator" ? "dgm-fill-acc" : "dgm-fill-ink"}
-          />
-          <text x={bx(r.e) + Math.max((r.e - r.s + 1) * M, 4) + 7} y={y(i) + 3} class="dgm-sm">
-            {r.c}
-          </text>
-        </g>
-      ))
-    }
-  </svg>
+      {
+        rows.map((r, i) => (
+          <g>
+            <text x={X0 - 12} y={y(i) + 3} text-anchor="end" class="dgm-sm">
+              {r.label}
+            </text>
+            <rect
+              x={bx(r.s)}
+              y={y(i) - 4}
+              width={Math.max((r.e - r.s + 1) * M, 4)}
+              height="8"
+              class={r.label === "hft-simulator" ? "dgm-fill-acc" : "dgm-fill-ink"}
+            />
+            <text x={bx(r.e) + Math.max((r.e - r.s + 1) * M, 4) + 7} y={y(i) + 3} class="dgm-sm">
+              {r.c}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </div>
   <figcaption class="mono mt-4">
     Commit windows per repo — first to last commit, GitHub API · Oct 2026
   </figcaption>

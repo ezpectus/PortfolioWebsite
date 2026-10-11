@@ -203,3 +203,13 @@ body {
 .dgm-fill-ink {
   fill: var(--color-ink);
 }
+
+/* diagrams keep a readable min width — scroll sideways on small screens */
+.dgm-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dgm-scroll svg {
+  min-width: 620px;
+}

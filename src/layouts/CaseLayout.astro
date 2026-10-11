@@ -71,7 +71,9 @@ const d = entry.data;
 
     <figure class="border-b border-line py-10">
       <figcaption class="mono mb-6">System diagram</figcaption>
-      <Diagram name={d.diagram} />
+      <div class="dgm-scroll">
+        <Diagram name={d.diagram} />
+      </div>
     </figure>
 
     <div class="grid grid-cols-1 gap-10 py-10 md:grid-cols-12">
