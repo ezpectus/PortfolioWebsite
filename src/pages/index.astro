@@ -1,0 +1,242 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHead from "../components/SectionHead.astro";
+import StatsStrip from "../components/StatsStrip.astro";
+import TimelineStrip from "../components/TimelineStrip.astro";
+import PipelineDiagram from "../components/PipelineDiagram.astro";
+import WorkTable from "../components/WorkTable.astro";
+import site from "../data/site.json";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const workRows = projects.map((p) => ({
+  name: p.data.title,
+  year: p.data.year,
+  stack: p.data.stack.slice(0, 3).join(" · "),
+  metric: p.data.metric,
+  href: `/work/${p.id}/`,
+  glyph: p.data.diagram,
+}));
+
+const aiArtifacts = [
+  {
+    label: "Tool",
+    title: "GuardDOG",
+    text: "Hybrid repo scanner I built for the AI-code era: regex + AST layers for free, LLM only on changed files. Findings fail the build via exit code.",
+    href: "https://github.com/ezpectus/GuardDOG",
+    hrefLabel: "github ↗",
+  },
+  {
+    label: "Product",
+    title: "forgeai",
+    text: "Prompt-to-live-URL generator — ~15s to a deployed site with a database, ~$0.002 per generation. BYOK, self-hostable, MIT.",
+    href: "/work/forgeai/",
+    hrefLabel: "case study →",
+  },
+  {
+    label: "Discipline",
+    title: "Slop audit",
+    text: "My standing rule: assume AI output is hollow until proven otherwise. Trace the data, count the stubs, check that 'services' aren't one-line returns. Documented as a reusable workflow.",
+    href: "/work/guarddog/",
+    hrefLabel: "the gate →",
+  },
+];
+---
+
+<BaseLayout
+  title="Denys Stepanenko — Software Engineer"
+  description="Backend & full-stack engineer in Staffordshire, UK. .NET, distributed systems, and AI-assisted development done properly — with review, audit and CI gates."
+>
+  <!-- hero -->
+  <section class="mx-auto max-w-[1120px] px-5 pb-16 pt-20 sm:pt-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-8">
+        <p class="mono">Software engineer — Staffordshire, UK</p>
+        <h1
+          class="mt-6 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-ink sm:text-7xl"
+        >
+          Denys<br />Stepanenko
+        </h1>
+        <p class="mt-8 max-w-[52ch] text-lg leading-relaxed text-muted">
+          Backend & full-stack. I build systems that hold up under real conditions — and I use AI
+          like an engineer, not a shortcut.
+        </p>
+        <div class="mt-10 flex flex-wrap items-baseline gap-x-8 gap-y-3">
+          <a
+            href="#work"
+            class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+            >Selected work ↓</a
+          >
+          <a href={site.cv} class="mono hover:text-ink">CV ↓</a>
+          <a href={site.links.github} class="mono hover:text-ink" rel="me">github.com/ezpectus ↗</a>
+          <a href={site.links.linkedin} class="mono hover:text-ink" rel="me">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="lg:col-span-4 lg:pt-10">
+        <div class="border border-line">
+          {
+            [
+              ["handle", "ezpectus"],
+              ["base", "Staffordshire, UK"],
+              ["email", "stepanenko.den2006@gmail.com"],
+              ["status", "open to SWE / backend roles"],
+              ["work auth", "UK — no sponsorship"],
+            ].map(([k, v], i, arr) => (
+              <div class:list={["flex gap-4 px-4 py-3", { "border-b border-line": i < arr.length - 1 }]}>
+                <span class="mono w-[5.5rem] shrink-0">{k}</span>
+                <span class="font-mono text-xs break-all text-ink">{v}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-[1120px] px-5">
+    <StatsStrip />
+  </div>
+
+  <div class="mx-auto max-w-[1120px] px-5 pt-8">
+    <TimelineStrip />
+  </div>
+
+  <!-- 01 / AI workflow -->
+  <section id="ai" class="mx-auto max-w-[1120px] scroll-mt-8 px-5 pt-20">
+    <SectionHead num="01" label="AI in development" title="How I work with AI" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      I use AI agents daily — for generation, scaffolding and exploration. What I ship is what I've
+      read, audited and pushed through a gate. The model gives speed; the process gives correctness.
+    </p>
+
+    <div class="mt-10 border border-line p-6 sm:p-10">
+      <PipelineDiagram />
+    </div>
+
+    <div class="grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-3">
+      {
+        aiArtifacts.map((a) => (
+          <div class="bg-paper p-6">
+            <p class="mono">{a.label}</p>
+            <h3 class="mt-2 font-display text-xl font-semibold tracking-tight text-ink">
+              {a.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{a.text}</p>
+            <a href={a.href} class="mono mt-4 inline-block text-accent-deep hover:underline">
+              {a.hrefLabel}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="mt-12 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+      “AI writes the draft. <span class="text-accent">I own the diff.</span>”
+    </p>
+  </section>
+
+  <!-- 02 / selected work -->
+  <section id="work" class="mx-auto max-w-[1120px] px-5 pt-24">
+    <SectionHead num="02" label="Selected work" title="Flagship builds" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      Seven projects that show range: low-latency C++, .NET backends, frontend architecture,
+      devtools — and AI used where it earns its tokens.
+    </p>
+    <div class="mt-10">
+      <WorkTable rows={workRows} numbered />
+    </div>
+    <a href="/work/" class="mono mt-6 inline-block text-accent-deep hover:underline">
+      Full project index → /work
+    </a>
+  </section>
+
+  <!-- 03 / about -->
+  <section id="about" class="mx-auto max-w-[1120px] scroll-mt-8 px-5 pt-24">
+    <SectionHead num="03" label="About" title="The short version" />
+    <div class="mt-6 grid grid-cols-1 gap-10 md:grid-cols-12">
+      <div class="space-y-4 md:col-span-7">
+        <p class="text-base leading-relaxed text-ink">
+          Backend-focused engineer with full-stack range — .NET, ASP.NET Core, PostgreSQL and Redis
+          on one side, React and TypeScript on the other. My interest sits where software
+          architecture, distributed systems and software that works under real conditions meet — not
+          in tutorials.
+        </p>
+        <p class="text-base leading-relaxed text-ink">
+          I'd rather build something that solves a real problem, badly at first, then fix it
+          properly — that's the thread through everything in the index above. Outside of shipped
+          work I've solved 3,200+ algorithmic problems across LeetCode, HackerRank and Codeforces:
+          regular hard problems are the fastest way I know to sharpen engineering judgment.
+        </p>
+        <p class="text-base leading-relaxed text-ink">
+          Currently going deeper into distributed systems, advanced PostgreSQL and SaaS
+          architecture. Freelance on Upwork — three clients shipped so far. Open to software
+          engineer / backend / full-stack roles and freelance work.
+        </p>
+      </div>
+      <aside class="md:col-span-5">
+        <p class="mono mb-4">Working stack</p>
+        <ul class="space-y-1.5">
+          {
+            [
+              "C# · .NET · ASP.NET Core · EF Core · Dapper · SignalR",
+              "TypeScript · React · Next.js · Node.js · Tailwind",
+              "C++20 · Python · Go · Rust (project-level)",
+              "PostgreSQL · Redis · Docker · Kubernetes · CI/CD",
+              "LLM pipelines · agent workflows · code-audit tooling",
+            ].map((s) => (
+              <li class="border-b border-line pb-1.5 font-mono text-[13px] text-ink">{s}</li>
+            ))
+          }
+        </ul>
+        <p class="mono mb-4 mt-8">Background</p>
+        <ul class="space-y-1.5">
+          {
+            [
+              "BSc Software Engineering — Igor Sikorsky KPI · 2025—",
+              "BTEC L3 Computer Science — JCB Academy · 2023–25",
+              "Freelance SWE — Upwork · Jun 2026— · 3 clients",
+              "InfoSec intern — JCB · Jul & Sep 2024",
+              "English B2 · Ukrainian native · Russian fluent",
+              "Authorized to work in the UK — no sponsorship",
+            ].map((s) => (
+              <li class="border-b border-line pb-1.5 font-mono text-[13px] text-ink">{s}</li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 04 / contact -->
+  <section class="mx-auto max-w-[1120px] px-5 py-24">
+    <SectionHead num="04" label="Contact" title="Get in touch" />
+    <div class="mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="max-w-[48ch] text-base leading-relaxed text-ink">
+          Working on something that needs a backend that holds up — or a pipeline that keeps
+          AI-generated code honest? Fastest reply is email.
+        </p>
+        <p class="mono mt-3">Authorized to work in the UK — no sponsorship required</p>
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-3">
+        <a
+          href={`mailto:${site.email}`}
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >{site.email} ↗</a
+        >
+        <a
+          href={site.links.linkedin}
+          rel="me"
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >LinkedIn ↗</a
+        >
+        <a
+          href={site.links.github}
+          rel="me"
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >GitHub ↗</a
+        >
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+const ticks = [
+  0.4, 0.42, 0.38, 0.55, 0.5, 0.62, 0.58, 0.7, 0.66, 0.61, 0.74, 0.8, 0.76, 0.7, 0.85, 0.9, 0.84,
+  0.78, 0.92, 0.88,
+];
+const pts = ticks.map((v, i) => `${30 + i * 36},${268 - v * 40}`).join(" ");
+---
+
+<svg
+  viewBox="0 0 760 300"
+  class="h-auto w-full"
+  role="img"
+  aria-label="HFT system: market feed into C++20 engine, fan-out to shared memory, Rust executor, CUDA and React dashboards"
+>
+  <defs>
+    <marker id="arr-h" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- feed -->
+  <rect x="20" y="105" width="95" height="40" class="dgm-box"></rect>
+  <text x="67" y="121" text-anchor="middle" class="dgm dgm-ink">feed</text>
+  <text x="67" y="135" text-anchor="middle" class="dgm-sm">fix 4.4</text>
+
+  <!-- engine -->
+  <rect x="160" y="55" width="215" height="140" class="dgm-box-acc"></rect>
+  <text x="267" y="76" text-anchor="middle" class="dgm dgm-ink">c++20 signal engine</text>
+  <line x1="172" y1="86" x2="363" y2="86" class="dgm-line"></line>
+  <text x="180" y="103" class="dgm-sm">spsc rings · lock-free</text>
+  <text x="180" y="120" class="dgm-sm">hmm regime · baum-welch</text>
+  <text x="180" y="137" class="dgm-sm">75+ quant models</text>
+  <text x="180" y="154" class="dgm-sm">onnx inference · branchless</text>
+  <text x="180" y="171" class="dgm-sm">cache-line aligned</text>
+
+  <!-- fan-out boxes -->
+  <rect x="445" y="45" width="135" height="34" class="dgm-box"></rect>
+  <text x="512" y="59" text-anchor="middle" class="dgm dgm-ink">shm ipc</text>
+  <text x="512" y="72" text-anchor="middle" class="dgm-sm">c++ ↔ python</text>
+
+  <rect x="445" y="103" width="135" height="34" class="dgm-box"></rect>
+  <text x="512" y="117" text-anchor="middle" class="dgm dgm-ink">rust executor</text>
+  <text x="512" y="130" text-anchor="middle" class="dgm-sm">order hot path</text>
+
+  <rect x="445" y="161" width="135" height="34" class="dgm-box"></rect>
+  <text x="512" y="175" text-anchor="middle" class="dgm dgm-ink">cuda batch</text>
+  <text x="512" y="188" text-anchor="middle" class="dgm-sm">model compute</text>
+
+  <rect x="640" y="103" width="100" height="34" class="dgm-box-mut"></rect>
+  <text x="690" y="117" text-anchor="middle" class="dgm dgm-ink">dashboards</text>
+  <text x="690" y="130" text-anchor="middle" class="dgm-sm">191+ panels</text>
+
+  <!-- edges -->
+  <line x1="115" y1="125" x2="156" y2="125" class="dgm-edge" marker-end="url(#arr-h)"></line>
+  <line x1="375" y1="72" x2="441" y2="62" class="dgm-edge" marker-end="url(#arr-h)"></line>
+  <line x1="375" y1="120" x2="441" y2="120" class="dgm-edge" marker-end="url(#arr-h)"></line>
+  <line x1="375" y1="170" x2="441" y2="178" class="dgm-edge" marker-end="url(#arr-h)"></line>
+  <line x1="580" y1="120" x2="636" y2="120" class="dgm-dash" marker-end="url(#arr-h)"></line>
+  <text x="118" y="112" class="dgm-sm">ticks</text>
+
+  <!-- synthetic tick strip -->
+  <line x1="30" y1="272" x2="730" y2="272" class="dgm-line"></line>
+  <polyline points={pts} fill="none" stroke="#141414" stroke-width="1"></polyline>
+  <polyline
+    points={pts}
+    fill="none"
+    stroke="#e8480c"
+    stroke-width="1"
+    stroke-dasharray="40 190"
+    stroke-dashoffset="60"></polyline>
+  <text x="30" y="292" class="dgm-sm">synthetic market data · regime bands · sub-ms switching</text>
+</svg>

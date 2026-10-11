@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAFAF7"/>
+  <line x1="80" y1="0" x2="80" y2="630" stroke="#E2E0DA"/>
+  <line x1="1120" y1="0" x2="1120" y2="630" stroke="#E2E0DA"/>
+  <line x1="80" y1="540" x2="1120" y2="540" stroke="#E2E0DA"/>
+  <g transform="translate(80,90)">
+    <rect x="-14" y="-14" width="52" height="52" fill="#141414"/>
+    <path d="M14 -2 L4 26" stroke="#E8480C" stroke-width="5"/>
+    <path d="M28 -2 L18 26" stroke="#E8480C" stroke-width="5"/>
+  </g>
+  <text x="80" y="240" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="700" letter-spacing="-3" fill="#141414">Denys Stepanenko</text>
+  <text x="82" y="310" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#6B6B66">Software Engineer — backend &amp; full-stack</text>
+  <line x1="82" y1="350" x2="182" y2="350" stroke="#E8480C" stroke-width="3"/>
+  <text x="82" y="580" font-family="Courier, monospace" font-size="22" letter-spacing="3" fill="#6B6B66">STAFFORDSHIRE, UK · GITHUB.COM/EZPECTUS</text>
+  <text x="1120" y="580" text-anchor="end" font-family="Courier, monospace" font-size="22" letter-spacing="3" fill="#E8480C">AI-ASSISTED, HUMAN-VERIFIED</text>
+</svg>

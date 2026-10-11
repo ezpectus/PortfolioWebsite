@@ -1,0 +1,61 @@
+---
+const stages = [
+  { n: "01", label: "prompt", sub: "one sentence" },
+  { n: "02", label: "codegen", sub: "openrouter / hf" },
+  { n: "03", label: "build", sub: "db + forms wired" },
+  { n: "04", label: "deploy", sub: "infra automated" },
+  { n: "05", label: "live url", sub: "~15 seconds" },
+];
+const x = (i: number) => 20 + i * 148;
+---
+
+<svg
+  viewBox="0 0 760 200"
+  class="h-auto w-full"
+  role="img"
+  aria-label="forgeai pipeline: prompt, codegen, build with database and forms, deploy, live URL in about 15 seconds"
+>
+  <defs>
+    <marker id="arr-f" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  {
+    stages.map((s, i) => (
+      <g>
+        <text x={x(i) + 64} y="72" text-anchor="middle" class="dgm-sm">
+          {s.n}
+        </text>
+        <rect x={x(i)} y="88" width="128" height="46" class={i === 4 ? "dgm-box-acc" : "dgm-box"} />
+        <text
+          x={x(i) + 64}
+          y="108"
+          text-anchor="middle"
+          class={i === 4 ? "dgm dgm-acc" : "dgm dgm-ink"}
+        >
+          {s.label}
+        </text>
+        <text x={x(i) + 64} y="123" text-anchor="middle" class="dgm-sm">
+          {s.sub}
+        </text>
+        {i < 4 && (
+          <line
+            x1={x(i) + 128}
+            y1="111"
+            x2={x(i + 1) - 4}
+            y2="111"
+            class="dgm-edge"
+            marker-end="url(#arr-f)"
+          />
+        )}
+      </g>
+    ))
+  }
+
+  <text x="20" y="168" class="dgm-sm"
+    >byok · self-hostable · mit · ~$0.002 per generation — a sentence becomes a deployed site, not a
+    screenshot</text
+  >
+  <line x1="20" y1="180" x2="740" y2="180" class="dgm-line"></line>
+</svg>

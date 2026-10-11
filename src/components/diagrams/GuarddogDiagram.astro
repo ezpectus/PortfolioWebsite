@@ -1,0 +1,67 @@
+---
+const layers = [
+  { label: "regex layer", sub: "17 rules · any language · free", w: 320, y: 82 },
+  { label: "ast layer", sub: "~15 checks · python", w: 260, y: 136 },
+  { label: "llm layer", sub: "changed files only · sha256 cache", w: 200, y: 190 },
+];
+---
+
+<svg
+  viewBox="0 0 760 285"
+  class="h-auto w-full"
+  role="img"
+  aria-label="GuardDOG funnel: changed files through regex, AST and LLM layers into a report and a CI exit-code gate"
+>
+  <defs>
+    <marker id="arr-g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- input -->
+  <rect x="40" y="24" width="380" height="32" class="dgm-box-mut"></rect>
+  <text x="230" y="44" text-anchor="middle" class="dgm dgm-ink">repo files · sha256 vs cache</text>
+
+  <!-- funnel layers -->
+  {
+    layers.map((l) => (
+      <g>
+        <rect x={230 - l.w / 2} y={l.y} width={l.w} height="40" class="dgm-box" />
+        <text x="230" y={l.y + 18} text-anchor="middle" class="dgm dgm-ink">
+          {l.label}
+        </text>
+        <text x="230" y={l.y + 32} text-anchor="middle" class="dgm-sm">
+          {l.sub}
+        </text>
+      </g>
+    ))
+  }
+  <line x1="230" y1="56" x2="230" y2="80" class="dgm-edge" marker-end="url(#arr-g)"></line>
+  <line x1="230" y1="122" x2="230" y2="134" class="dgm-edge" marker-end="url(#arr-g)"></line>
+  <line x1="230" y1="176" x2="230" y2="188" class="dgm-edge" marker-end="url(#arr-g)"></line>
+
+  <!-- no-key note -->
+  <text x="455" y="206" class="dgm-sm">no api key → honest</text>
+  <text x="455" y="218" class="dgm-sm">"skipped", never fake-green</text>
+
+  <!-- report -->
+  <rect x="540" y="120" width="140" height="46" class="dgm-box"></rect>
+  <text x="610" y="140" text-anchor="middle" class="dgm dgm-ink">report</text>
+  <text x="610" y="155" text-anchor="middle" class="dgm-sm">md · json · html</text>
+
+  <!-- converge lines to report -->
+  <path d="M 390 102 L 536 132" class="dgm-edge" marker-end="url(#arr-g)"></path>
+  <path d="M 360 156 L 536 146" class="dgm-edge" marker-end="url(#arr-g)"></path>
+  <path d="M 330 210 L 540 166" class="dgm-edge" marker-end="url(#arr-g)"></path>
+
+  <!-- exit-code gate -->
+  <path d="M 610 166 L 610 200" class="dgm-edge" marker-end="url(#arr-g)"></path>
+  <rect x="540" y="206" width="140" height="44" class="dgm-box-acc"></rect>
+  <text x="610" y="226" text-anchor="middle" class="dgm dgm-acc">exit code</text>
+  <text x="610" y="241" text-anchor="middle" class="dgm-sm">critical → block commit</text>
+
+  <!-- entry points -->
+  <text x="40" y="272" class="dgm-sm"
+    >cli · run_all.bat · pre-commit hook · ci stage — zero runtime deps, 26 tests</text
+  >
+</svg>

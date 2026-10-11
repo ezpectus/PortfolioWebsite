@@ -1,0 +1,93 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import Diagram from "../components/Diagram.astro";
+
+interface Props {
+  entry: CollectionEntry<"projects">;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+---
+
+<BaseLayout title={`${d.title} — Denys Stepanenko`} description={d.tagline}>
+  <article class="mx-auto max-w-[1120px] px-5">
+    <header class="border-b border-line pb-10 pt-14">
+      <p class="mono">
+        <a href="/#work" class="hover:text-ink">← Selected work</a>
+        <span class="mx-2">/</span>
+        <span class="text-accent-deep">{String(d.order).padStart(2, "0")}</span>
+      </p>
+      <h1 class="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        {d.title}
+      </h1>
+      <p class="mt-4 max-w-[60ch] text-lg leading-relaxed text-muted">{d.tagline}</p>
+
+      <dl class="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-6 md:grid-cols-5">
+        <div>
+          <dt class="mono">Period</dt>
+          <dd class="mt-1.5 text-sm font-medium text-ink">{d.year}</dd>
+        </div>
+        <div>
+          <dt class="mono">Role</dt>
+          <dd class="mt-1.5 text-sm font-medium text-ink">{d.role}</dd>
+        </div>
+        {
+          d.commits && (
+            <div>
+              <dt class="mono">Commits</dt>
+              <dd class="mt-1.5 text-sm font-medium text-ink">
+                {d.commits.toLocaleString("en-GB")}
+              </dd>
+            </div>
+          )
+        }
+        <div>
+          <dt class="mono">Key metric</dt>
+          <dd class="mt-1.5 text-sm font-medium text-ink">{d.metric}</dd>
+        </div>
+        <div>
+          <dt class="mono">Links</dt>
+          <dd class="mt-1.5 flex gap-4 text-sm font-medium">
+            <a href={d.repo} class="text-accent-deep underline underline-offset-4" rel="noopener"
+              >Repo ↗</a
+            >
+            {
+              d.live && (
+                <a
+                  href={d.live}
+                  class="text-accent-deep underline underline-offset-4"
+                  rel="noopener"
+                >
+                  Live ↗
+                </a>
+              )
+            }
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <figure class="border-b border-line py-10">
+      <figcaption class="mono mb-6">System diagram</figcaption>
+      <Diagram name={d.diagram} />
+    </figure>
+
+    <div class="grid grid-cols-1 gap-10 py-10 md:grid-cols-12">
+      <aside class="md:col-span-4">
+        <p class="mono mb-4">Stack</p>
+        <ul class="space-y-1.5">
+          {
+            d.stack.map((s) => (
+              <li class="border-b border-line pb-1.5 font-mono text-[13px] text-ink">{s}</li>
+            ))
+          }
+        </ul>
+      </aside>
+      <div class="prose-case md:col-span-8">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

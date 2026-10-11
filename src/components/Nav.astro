@@ -1,0 +1,42 @@
+---
+import site from "../data/site.json";
+
+const path = Astro.url.pathname;
+const links = [
+  { href: "/#work", label: "Work" },
+  { href: "/#ai", label: "AI workflow" },
+  { href: "/work/", label: "Index" },
+  { href: "/#about", label: "About" },
+];
+---
+
+<header class="border-b border-line">
+  <nav
+    class="mx-auto flex max-w-[1120px] items-baseline justify-between px-5 py-4"
+    aria-label="Main"
+  >
+    <a href="/" class="font-mono text-sm font-semibold tracking-tight text-ink">
+      ds<span class="text-accent-deep">//</span>
+    </a>
+    <div class="flex items-baseline gap-5">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={[
+              "mono transition-colors hover:text-ink",
+              { "text-ink": l.href === "/work" && path.startsWith("/work") },
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href={site.cv}
+        class="mono border border-ink px-2.5 py-1 text-ink transition-colors hover:bg-ink hover:text-paper"
+        >CV&nbsp;↓</a
+      >
+    </div>
+  </nav>
+</header>

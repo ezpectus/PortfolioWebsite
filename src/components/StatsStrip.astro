@@ -1,0 +1,23 @@
+---
+import site from "../data/site.json";
+---
+
+<dl class="grid grid-cols-2 border border-line md:grid-cols-4">
+  {
+    site.stats.map((s, i) => (
+      <div
+        class:list={[
+          "px-5 py-6",
+          {
+            "border-l border-line": i > 0,
+            "max-md:border-l-0": i === 2,
+            "max-md:border-t max-md:border-line": i >= 2,
+          },
+        ]}
+      >
+        <dt class="mono order-2 mt-2 block">{s.label}</dt>
+        <dd class="font-display text-3xl font-semibold tracking-tight text-ink">{s.value}</dd>
+      </div>
+    ))
+  }
+</dl>

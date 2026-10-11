@@ -1,0 +1,27 @@
+---
+import HftDiagram from "./diagrams/HftDiagram.astro";
+import LogsDiagram from "./diagrams/LogsDiagram.astro";
+import SortingDiagram from "./diagrams/SortingDiagram.astro";
+import HttpRangeDiagram from "./diagrams/HttpRangeDiagram.astro";
+import YamlGraphDiagram from "./diagrams/YamlGraphDiagram.astro";
+import ForgeDiagram from "./diagrams/ForgeDiagram.astro";
+import GuarddogDiagram from "./diagrams/GuarddogDiagram.astro";
+
+interface Props {
+  name: string;
+}
+
+const map = {
+  hft: HftDiagram,
+  logs: LogsDiagram,
+  sorting: SortingDiagram,
+  http206: HttpRangeDiagram,
+  yamlgraph: YamlGraphDiagram,
+  forge: ForgeDiagram,
+  guarddog: GuarddogDiagram,
+} as const;
+
+const C = map[Astro.props.name as keyof typeof map] ?? HftDiagram;
+---
+
+<C />

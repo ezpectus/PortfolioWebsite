@@ -1,0 +1,79 @@
+---
+const stages = [
+  { n: "01", label: "spec", sub: "intent + tests first", human: true },
+  { n: "02", label: "agent", sub: "AI generates diff", human: false },
+  { n: "03", label: "review", sub: "every line read", human: true },
+  { n: "04", label: "slop audit", sub: "anti-pattern hunt", human: true },
+  { n: "05", label: "guarddog", sub: "exit-code gate", human: false, gate: true },
+  { n: "06", label: "tests + ci", sub: "suite & build", human: false },
+  { n: "07", label: "ship", sub: "merge → deploy", human: false },
+];
+
+const xs = (i: number) => 80 + i * 160;
+const axisY = 105;
+---
+
+<svg
+  viewBox="0 0 1120 235"
+  class="h-auto w-full"
+  role="img"
+  aria-label="AI-assisted engineering pipeline: spec, agent, review, slop audit, GuardDOG gate, tests, ship"
+>
+  <defs>
+    <marker id="arr-i" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+    <marker id="arr-m" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#6b6b66" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- legend -->
+  <g transform="translate(860,22)">
+    <rect x="0" y="-5" width="7" height="7" transform="rotate(45 3.5 -1.5)" class="dgm-fill-acc"
+    ></rect>
+    <text x="14" y="2" class="dgm-sm">human in the loop</text>
+    <circle cx="118" cy="-2" r="4" class="dgm-edge"></circle>
+    <text x="128" y="2" class="dgm-sm">automated</text>
+  </g>
+
+  <!-- main axis -->
+  <line x1="40" y1={axisY} x2="1075" y2={axisY} class="dgm-edge" marker-end="url(#arr-i)"></line>
+
+  {
+    stages.map((s, i) => (
+      <g>
+        <text x={xs(i)} y="52" text-anchor="middle" class="dgm dgm-acc">
+          {s.n}
+        </text>
+        {s.human ? (
+          <rect
+            x={xs(i) - 5}
+            y={axisY - 5}
+            width="10"
+            height="10"
+            transform={`rotate(45 ${xs(i)} ${axisY})`}
+            class="dgm-fill-acc"
+          />
+        ) : s.gate ? (
+          <circle cx={xs(i)} cy={axisY} r="6" class="dgm-box-acc" />
+        ) : (
+          <circle cx={xs(i)} cy={axisY} r="5" class="dgm-box" />
+        )}
+        <text x={xs(i)} y={axisY + 32} text-anchor="middle" class="dgm dgm-ink">
+          {s.label}
+        </text>
+        <text x={xs(i)} y={axisY + 48} text-anchor="middle" class="dgm-sm">
+          {s.sub}
+        </text>
+      </g>
+    ))
+  }
+
+  <!-- reject loop: guarddog gate back to spec -->
+  <path
+    d={`M ${xs(4)} ${axisY + 60} L ${xs(4)} 190 L ${xs(0)} 190 L ${xs(0)} ${axisY + 62}`}
+    class="dgm-dash"
+    marker-end="url(#arr-m)"></path>
+  <text x={xs(2)} y="184" text-anchor="middle" class="dgm-sm">rejected → fix → resubmit</text>
+</svg>

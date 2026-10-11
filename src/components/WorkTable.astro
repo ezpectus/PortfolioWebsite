@@ -1,0 +1,57 @@
+---
+import ProjectGlyph from "./ProjectGlyph.astro";
+
+interface Row {
+  num?: string;
+  name: string;
+  year: string;
+  stack: string;
+  note?: string;
+  metric?: string;
+  href: string;
+  external?: boolean;
+  glyph?: string;
+}
+
+interface Props {
+  rows: Row[];
+  numbered?: boolean;
+}
+
+const { rows, numbered = false } = Astro.props;
+---
+
+<div class="border-t border-line">
+  {
+    rows.map((r, i) => (
+      <a
+        href={r.href}
+        rel={r.external ? "noopener" : undefined}
+        class="group grid grid-cols-12 items-baseline gap-x-4 border-b border-line py-4 transition-colors hover:bg-code"
+      >
+        <span class="mono col-span-1">{numbered ? String(i + 1).padStart(2, "0") : ""}</span>
+        <span
+          class:list={[
+            "col-span-11 font-display text-lg font-semibold tracking-tight text-ink group-hover:text-accent-deep",
+            r.glyph ? "sm:col-span-3" : "sm:col-span-4",
+          ]}
+        >
+          {r.name}
+          {r.external && <span class="mono ml-1 text-muted">↗</span>}
+        </span>
+        {r.glyph && (
+          <span class="hidden items-center sm:col-span-1 sm:flex">
+            <ProjectGlyph name={r.glyph} />
+          </span>
+        )}
+        <span class="mono col-span-6 col-start-2 sm:col-span-3 sm:col-start-auto">{r.stack}</span>
+        <span class="mono col-span-5 col-start-2 sm:col-span-3 sm:col-start-auto">
+          {r.metric ?? r.note}
+        </span>
+        <span class="mono col-span-12 col-start-2 sm:col-span-1 sm:col-start-auto sm:text-right">
+          {r.year}
+        </span>
+      </a>
+    ))
+  }
+</div>

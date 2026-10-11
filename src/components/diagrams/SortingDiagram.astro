@@ -1,0 +1,75 @@
+---
+// insertion-sort snapshot frames — each frame is an immutable state
+const frames = [
+  { bars: [58, 90, 34, 72, 46, 82, 26, 66, 50], cur: 1 },
+  { bars: [34, 58, 90, 72, 46, 82, 26, 66, 50], cur: 2 },
+  { bars: [34, 46, 58, 90, 72, 82, 26, 66, 50], cur: 4 },
+  { bars: [26, 34, 46, 58, 72, 82, 90, 66, 50], cur: 7 },
+  { bars: [26, 34, 46, 50, 58, 66, 72, 82, 90], cur: -1 },
+];
+const fw = 128;
+const gap = 22;
+const fx = (i: number) => 24 + i * (fw + gap);
+const base = 182;
+---
+
+<svg
+  viewBox="0 0 760 265"
+  class="h-auto w-full"
+  role="img"
+  aria-label="Snapshot-based algorithm playback: five immutable states of an insertion sort, seekable in O(1)"
+>
+  {
+    frames.map((f, i) => (
+      <g>
+        <text x={fx(i) + fw / 2} y="22" text-anchor="middle" class="dgm-sm">
+          snapshot {i}
+        </text>
+        <rect x={fx(i)} y="32" width={fw} height={base - 20} class="dgm-box-mut" />
+        {f.bars.map((h, j) => (
+          <rect
+            x={fx(i) + 10 + j * 12}
+            y={base - h}
+            width="8"
+            height={h}
+            class={j === f.cur ? "dgm-fill-acc" : "dgm-fill-ink"}
+            opacity={j === f.cur ? 1 : 0.85}
+          />
+        ))}
+        {i < 4 && (
+          <line
+            x1={fx(i) + fw + 2}
+            y1="120"
+            x2={fx(i + 1) - 2}
+            y2="120"
+            class="dgm-dash"
+            marker-end="url(#arr-s)"
+          />
+        )}
+      </g>
+    ))
+  }
+
+  <defs>
+    <marker id="arr-s" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#6b6b66" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- timeline scrubber -->
+  <line x1="24" y1="228" x2="736" y2="228" class="dgm-line"></line>
+  {
+    frames.map((_, i) => (
+      <circle
+        cx={fx(i) + fw / 2}
+        cy="228"
+        r={i === 2 ? 5 : 3}
+        class={i === 2 ? "dgm-fill-acc" : "dgm-fill-ink"}
+      />
+    ))
+  }
+  <path d="M 320 238 L 324 246 L 316 246 Z" class="dgm-fill-acc" transform="translate(4,0)"></path>
+  <text x="328" y="258" text-anchor="middle" class="dgm-sm"
+    >o(1) seek — jump to any snapshot, no replay</text
+  >
+</svg>

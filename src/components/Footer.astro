@@ -1,0 +1,22 @@
+---
+import site from "../data/site.json";
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line">
+  <div
+    class="mx-auto flex max-w-[1120px] flex-col gap-3 px-5 py-8 sm:flex-row sm:items-baseline sm:justify-between"
+  >
+    <p class="mono">
+      © {year}
+      {site.name} · {site.location}
+    </p>
+    <div class="flex flex-wrap gap-x-5 gap-y-2">
+      <a href={site.links.github} class="mono hover:text-ink" rel="me">GitHub</a>
+      <a href={site.links.linkedin} class="mono hover:text-ink" rel="me">LinkedIn</a>
+      <a href={site.links.leetcode} class="mono hover:text-ink" rel="me">LeetCode</a>
+      <a href={site.links.codeforces} class="mono hover:text-ink" rel="me">Codeforces</a>
+      <a href={site.links.hackerrank} class="mono hover:text-ink" rel="me">HackerRank</a>
+    </div>
+  </div>
+</footer>

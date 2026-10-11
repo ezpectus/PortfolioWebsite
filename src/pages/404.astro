@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 — Denys Stepanenko" description="Page not found.">
+  <div class="mx-auto max-w-[1120px] px-5 py-32">
+    <p class="mono">Error / 404</p>
+    <h1 class="mt-6 font-display text-6xl font-semibold tracking-tight text-ink sm:text-8xl">
+      404
+    </h1>
+    <p class="mt-6 max-w-[40ch] text-base leading-relaxed text-muted">
+      This route doesn't exist. The index does — everything worth seeing is one click away.
+    </p>
+    <a
+      href="/"
+      class="mt-10 inline-block border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+      >← Back to index</a
+    >
+  </div>
+</BaseLayout>

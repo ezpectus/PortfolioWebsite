@@ -1,0 +1,76 @@
+---
+const segs = 6;
+const x0 = 130;
+const w = 600;
+const segW = w / segs;
+const filled = 4;
+---
+
+<svg
+  viewBox="0 0 760 240"
+  class="h-auto w-full"
+  role="img"
+  aria-label="HTTP 206 partial content: file segmented on server, byte-range requests fill the client buffer progressively"
+>
+  <defs>
+    <marker id="arr-r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <text x="20" y="55" class="dgm dgm-ink">server</text>
+  <text x="20" y="175" class="dgm dgm-ink">client</text>
+
+  <!-- server file -->
+  <rect x={x0} y="35" width={w} height="34" class="dgm-box"></rect>
+  {
+    Array.from({ length: segs - 1 }).map((_, i) => (
+      <line x1={x0 + segW * (i + 1)} y1="35" x2={x0 + segW * (i + 1)} y2="69" class="dgm-line" />
+    ))
+  }
+  <text x={x0 + w / 2} y="54" text-anchor="middle" class="dgm-sm"
+    >video.mp4 — segmented byte store</text
+  >
+
+  <!-- range request arrows (dashed up) -->
+  {
+    [0, 1, 2].map((i) => (
+      <line
+        x1={x0 + segW * i + 20}
+        y1="160"
+        x2={x0 + segW * i + 20}
+        y2="75"
+        class="dgm-dash"
+        marker-end="url(#arr-r)"
+      />
+    ))
+  }
+  <text x={x0 + 8} y="100" class="dgm-sm">range: bytes=0–1023 →</text>
+  <text x={x0 + 8} y="115" class="dgm-sm">206 partial content ↓</text>
+
+  <!-- client buffer -->
+  <rect x={x0} y="155" width={w} height="34" class="dgm-box"></rect>
+  {
+    Array.from({ length: segs }).map((_, i) => (
+      <g>
+        <line x1={x0 + segW * i} y1="155" x2={x0 + segW * i} y2="189" class="dgm-line" />
+        {i < filled && (
+          <rect
+            x={x0 + segW * i + 1}
+            y="156"
+            width={segW - 2}
+            height="32"
+            fill="#141414"
+            opacity="0.12"
+          />
+        )}
+      </g>
+    ))
+  }
+  <rect x={x0 + segW * filled} y="150" width="2" height="44" class="dgm-fill-acc"></rect>
+  <text x={x0 + segW * filled + 8} y="146" class="dgm-sm dgm-acc">playhead — buffered ahead</text>
+
+  <text x="20" y="215" class="dgm-sm"
+    >seek = new range request · no full download · buffered counters off the write path</text
+  >
+</svg>

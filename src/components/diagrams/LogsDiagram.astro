@@ -1,0 +1,70 @@
+---
+const stages = [
+  { n: "01", label: "ingest", sub: "http intake" },
+  { n: "02", label: "dedup", sub: "sha256 content hash" },
+  { n: "03", label: "aggregate", sub: "lock-free metrics" },
+  { n: "04", label: "detect", sub: "anomaly rules" },
+  { n: "05", label: "ai patch", sub: "proposed fix" },
+];
+const x = (i: number) => 20 + i * 148;
+---
+
+<svg
+  viewBox="0 0 760 230"
+  class="h-auto w-full"
+  role="img"
+  aria-label="Observability pipeline: ingest, deduplication, lock-free aggregation, anomaly detection, AI patch generation"
+>
+  <defs>
+    <marker id="arr-l" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- signalr dashboard -->
+  <rect x="452" y="18" width="140" height="34" class="dgm-box-mut"></rect>
+  <text x="522" y="32" text-anchor="middle" class="dgm dgm-ink">signalr dashboards</text>
+  <text x="522" y="45" text-anchor="middle" class="dgm-sm">live stream</text>
+
+  {
+    stages.map((s, i) => (
+      <g>
+        <text x={x(i) + 64} y="95" text-anchor="middle" class="dgm-sm">
+          {s.n}
+        </text>
+        <rect
+          x={x(i)}
+          y="110"
+          width="128"
+          height="46"
+          class={i === 4 ? "dgm-box-acc" : "dgm-box"}
+        />
+        <text x={x(i) + 64} y="130" text-anchor="middle" class="dgm dgm-ink">
+          {s.label}
+        </text>
+        <text x={x(i) + 64} y="145" text-anchor="middle" class="dgm-sm">
+          {s.sub}
+        </text>
+        {i < 4 && (
+          <line
+            x1={x(i) + 128}
+            y1="133"
+            x2={x(i + 1) - 4}
+            y2="133"
+            class="dgm-edge"
+            marker-end="url(#arr-l)"
+          />
+        )}
+      </g>
+    ))
+  }
+
+  <!-- aggregate → dashboards -->
+  <path d="M 522 110 L 522 56" class="dgm-dash" marker-end="url(#arr-l)"></path>
+
+  <!-- feedback note -->
+  <text x="20" y="190" class="dgm-sm"
+    >redis pipelines · postgres persistence · dockerized e2e — anomalies in, candidate patches out</text
+  >
+  <line x1="20" y1="200" x2="740" y2="200" class="dgm-line"></line>
+</svg>

@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Mirror deploy — canonical is ezpectus.github.io.
+# Link this repo in Netlify UI (or `netlify init`) and it just works.

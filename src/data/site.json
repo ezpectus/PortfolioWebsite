@@ -1,0 +1,108 @@
+{
+  "name": "Denys Stepanenko",
+  "handle": "ezpectus",
+  "role": "Software Engineer — backend & full-stack",
+  "location": "Staffordshire, UK",
+  "email": "stepanenko.den2006@gmail.com",
+  "phone": "+44 7469416917",
+  "cv": "/cv/denys-stepanenko-cv.pdf",
+  "links": {
+    "github": "https://github.com/ezpectus",
+    "linkedin": "https://www.linkedin.com/in/denys-stepanenko-b66147341/",
+    "leetcode": "https://leetcode.com/u/ezpectus/",
+    "hackerrank": "https://www.hackerrank.com/profile/stepanenko_den21",
+    "codeforces": "https://codeforces.com/profile/ezpectus"
+  },
+  "stats": [
+    { "value": "3,200+", "label": "Algorithmic problems solved" },
+    { "value": "41", "label": "Public repositories" },
+    { "value": "1,600+", "label": "Commits in one repo" },
+    { "value": "7", "label": "Flagship builds" }
+  ],
+  "archive": [
+    {
+      "name": "infrastructure-tui",
+      "year": "Jul 2026",
+      "stack": "Go · Bubble Tea",
+      "note": "Terminal dashboard for Docker containers, CPU/memory, ports and uptime.",
+      "repo": "https://github.com/ezpectus/infrastructure-tui"
+    },
+    {
+      "name": "student-portal",
+      "year": "Jul–Aug 2026",
+      "stack": "Next.js 15 · React 19 · TS · Docker",
+      "note": "Student management portal — SaaS platform for educational institutions. 58 commits.",
+      "repo": "https://github.com/ezpectus/student-portal"
+    },
+    {
+      "name": "fullstack-portfolio",
+      "year": "Aug 2026",
+      "stack": "React · Express · Prisma · PostgreSQL",
+      "note": "9 production-ready full-stack applications: CRM, booking, hospital, HR, e-commerce, invoicing.",
+      "repo": "https://github.com/ezpectus/fullstack-portfolio"
+    },
+    {
+      "name": "TaskManager_App",
+      "year": "Jan–Jun 2026",
+      "stack": "ASP.NET Core · EF Core · React",
+      "note": "Clean Architecture + DDD task platform — JWT auth, roles, 75+ xUnit tests, Kanban UI.",
+      "repo": "https://github.com/ezpectus/TaskManager_App."
+    },
+    {
+      "name": "ai-regex-builder",
+      "year": "Jun 2026",
+      "stack": "JavaScript · OpenAI/Gemini/Ollama",
+      "note": "AI-powered regex builder — generate, test, explain, optimize and export from natural language.",
+      "repo": "https://github.com/ezpectus/ai-regex-builder"
+    },
+    {
+      "name": "cron-expression-builder",
+      "year": "Jun–Jul 2026",
+      "stack": "JavaScript · MIT",
+      "note": "Visual cron builder with live preview, next run times and human-readable descriptions.",
+      "repo": "https://github.com/ezpectus/cron-expression-builder"
+    },
+    {
+      "name": "-freelancer-toolkit",
+      "year": "Aug 2026",
+      "stack": "TypeScript",
+      "note": "Modular toolkit for freelance platforms — 160+ isolated modules with manifests and smoke tests.",
+      "repo": "https://github.com/ezpectus/-freelancer-toolkit"
+    },
+    {
+      "name": "playwright-parallel-executor",
+      "year": "Aug 2026",
+      "stack": "Python · Playwright",
+      "note": "Parallel execution harness for Playwright suites.",
+      "repo": "https://github.com/ezpectus/playwright-parallel-executor"
+    },
+    {
+      "name": "Algorithm-patterns",
+      "year": "Aug 2025 – Jul 2026",
+      "stack": "C++ · C#",
+      "note": "Algorithmic patterns with explanations — sliding window to greedy and prefix sums. 286 commits.",
+      "repo": "https://github.com/ezpectus/Algorithm-patterns"
+    },
+    {
+      "name": "LeetCode-solutions",
+      "year": "Jul 2025 – Aug 2026",
+      "stack": "C# · C++",
+      "note": "LeetCode solutions archive — 1,616 commits of daily practice.",
+      "repo": "https://github.com/ezpectus/LeetCode-solutions"
+    },
+    {
+      "name": "CodeForces-Solutions",
+      "year": "Sep 2025 – Aug 2026",
+      "stack": "C++17",
+      "note": "Codeforces contest solutions archive.",
+      "repo": "https://github.com/ezpectus/CodeForces-Solutions_CPP-17"
+    },
+    {
+      "name": "coursework",
+      "year": "Sep 2026 — active",
+      "stack": "C++ · C# · SQL · Mermaid",
+      "note": "University coursework — Igor Sikorsky KPI (FICE, IM-051): OOP labs, database labs, applied math.",
+      "repo": "https://github.com/ezpectus?tab=repositories"
+    }
+  ]
+}

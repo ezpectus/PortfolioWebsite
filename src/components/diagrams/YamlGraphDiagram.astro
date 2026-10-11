@@ -1,0 +1,71 @@
+---
+const yamlLines = [
+  "services:",
+  "  web:",
+  "    build: .",
+  "    ports: [80, 443]",
+  "    depends_on: api",
+  "  api:",
+  "    image: api:latest",
+  "    depends_on: db",
+  "  db:",
+  "    image: postgres:17",
+];
+const nodes = [
+  { id: "web", x: 470, y: 40 },
+  { id: "api", x: 580, y: 120 },
+  { id: "db", x: 470, y: 200 },
+];
+---
+
+<svg
+  viewBox="0 0 760 260"
+  class="h-auto w-full"
+  role="img"
+  aria-label="Bidirectional YAML to graph editing: compose file on the left, service graph on the right, AST round-trip between them"
+>
+  <defs>
+    <marker id="arr-y" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- yaml pane -->
+  <rect x="20" y="30" width="255" height="205" class="dgm-box"></rect>
+  <line x1="20" y1="52" x2="275" y2="52" class="dgm-line"></line>
+  <text x="32" y="45" class="dgm-sm dgm-ink">compose.yml — ast, not text</text>
+  {
+    yamlLines.map((l, i) => (
+      <text x="32" y={70 + i * 16} class="dgm-sm" style="text-transform:none">
+        {l.replaceAll(" ", " ")}
+      </text>
+    ))
+  }
+
+  <!-- bidirectional bridge -->
+  <line x1="285" y1="115" x2="425" y2="115" class="dgm-edge" marker-end="url(#arr-y)"></line>
+  <line x1="425" y1="140" x2="285" y2="140" class="dgm-edge" marker-end="url(#arr-y)"></line>
+  <text x="355" y="105" text-anchor="middle" class="dgm-sm">type → graph</text>
+  <text x="355" y="155" text-anchor="middle" class="dgm-sm">drag → yaml</text>
+  <text x="355" y="175" text-anchor="middle" class="dgm-sm dgm-acc">comments survive</text>
+
+  <!-- graph pane -->
+  {
+    nodes.map((n) => (
+      <g>
+        <rect x={n.x} y={n.y} width="80" height="32" class="dgm-box" />
+        <text x={n.x + 40} y={n.y + 20} text-anchor="middle" class="dgm dgm-ink">
+          {n.id}
+        </text>
+      </g>
+    ))
+  }
+  <path d="M 550 62 L 596 116" class="dgm-edge" marker-end="url(#arr-y)"></path>
+  <path d="M 580 156 L 524 196" class="dgm-edge" marker-end="url(#arr-y)"></path>
+  <text x="560" y="80" class="dgm-sm">depends_on</text>
+  <text x="600" y="180" class="dgm-sm">depends_on</text>
+
+  <!-- ports annotation -->
+  <text x="470" y="30" class="dgm-sm">ports: 80, 443 →</text>
+  <circle cx="470" cy="56" r="3" class="dgm-fill-acc"></circle>
+</svg>
