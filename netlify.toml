@@ -4,8 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  # canonical URL for sitemap/og on the Netlify mirror
-  SITE_URL = "https://denys-stepanenko.netlify.app"
+  # canonical URL comes from Netlify's built-in `URL` env — nothing to set
 
 # Mirror deploy — canonical is ezpectus.github.io.
 # Link this repo in Netlify UI (or `netlify init`) and it just works.
