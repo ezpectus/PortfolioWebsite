@@ -22,7 +22,9 @@ const stats = site.stats.map((s) =>
         ]}
       >
         <dt class="mono order-2 mt-2 block">{s.label}</dt>
-        <dd class="font-display text-3xl font-semibold tracking-tight text-ink">{s.value}</dd>
+        <dd class="font-display text-3xl font-semibold tabular-nums tracking-tight text-ink">
+          {s.value}
+        </dd>
       </div>
     ))
   }

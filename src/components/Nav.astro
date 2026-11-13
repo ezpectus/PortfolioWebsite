@@ -25,7 +25,7 @@ const links = [
           <a
             href={l.href}
             class:list={[
-              "mono transition-colors hover:text-ink",
+              "mono underline decoration-transparent underline-offset-4 transition-colors hover:text-ink hover:decoration-ink",
               { "text-ink": l.href === u("/work/") && path.includes("/work") },
               { "text-ink": l.href === u("/ai/") && path.includes("/ai/") },
             ]}

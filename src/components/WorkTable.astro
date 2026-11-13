@@ -37,7 +37,7 @@ const { rows, numbered = false } = Astro.props;
           <span class="mono col-span-1">{numbered ? String(i + 1).padStart(2, "0") : ""}</span>
           <span
             class:list={[
-              "col-span-11 font-display text-lg font-semibold tracking-tight text-ink group-hover:text-accent-deep",
+              "col-span-11 font-display text-lg font-semibold tracking-tight text-ink transition-transform duration-200 group-hover:translate-x-1 group-hover:text-accent-deep",
               r.glyph ? "sm:col-span-3" : "sm:col-span-4",
             ]}
           >
