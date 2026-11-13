@@ -1,7 +1,26 @@
 ---
-// commit windows + counts pulled from GitHub commits API on 2026-10-11
-// index 0 = Jul 2025 … index 15 = Oct 2026
-const MONTHS = ["J", "A", "S", "O", "N", "D", "J", "F", "M", "A", "M", "J", "J", "A", "S", "O"];
+// commit windows + counts pulled from GitHub commits API on 2026-11-13
+// index 0 = Jul 2025 … index 16 = Nov 2026
+// webhook-engine bar = local git history (unpublished repo)
+const MONTHS = [
+  "J",
+  "A",
+  "S",
+  "O",
+  "N",
+  "D",
+  "J",
+  "F",
+  "M",
+  "A",
+  "M",
+  "J",
+  "J",
+  "A",
+  "S",
+  "O",
+  "N",
+];
 const rows = [
   { label: "leetcode-solutions", s: 0, e: 13, c: "1,616" },
   { label: "algorithm-patterns", s: 1, e: 12, c: "286" },
@@ -14,10 +33,12 @@ const rows = [
   { label: "fullstack-portfolio", s: 13, e: 13, c: "89" },
   { label: "forgeai", s: 14, e: 14, c: "215" },
   { label: "guarddog", s: 15, e: 15, c: "13" },
+  { label: "webhook-engine", s: 15, e: 16, c: "134*" },
+  { label: "collabcanvas", s: 16, e: 16, c: "150" },
 ];
 const X0 = 200;
 const X1 = 700;
-const M = (X1 - X0) / 16;
+const M = (X1 - X0) / 17;
 const bx = (m: number) => X0 + m * M;
 const y = (i: number) => 40 + i * 23;
 const top = 28;
@@ -27,10 +48,10 @@ const bottom = y(rows.length - 1) + 10;
 <figure class="border border-line p-5 sm:p-8">
   <div class="dgm-scroll">
     <svg
-      viewBox="0 0 760 310"
+      viewBox="0 0 760 362"
       class="h-auto w-full"
       role="img"
-      aria-label="Commit activity windows per project, July 2025 to October 2026, drawn from the GitHub commits API"
+      aria-label="Commit activity windows per project, July 2025 to November 2026, drawn from the GitHub commits API"
     >
       <!-- month grid -->
       {
@@ -71,6 +92,6 @@ const bottom = y(rows.length - 1) + 10;
     </svg>
   </div>
   <figcaption class="mono mt-4">
-    Commit windows per repo — first to last commit, GitHub API · Oct 2026
+    Commit windows per repo — first to last commit, GitHub API · Nov 2026 · *local history
   </figcaption>
 </figure>

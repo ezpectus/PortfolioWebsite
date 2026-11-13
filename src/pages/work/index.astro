@@ -21,8 +21,8 @@ const archive = site.archive.map((r) => ({
   year: r.year,
   stack: r.stack,
   note: r.note,
-  href: r.repo,
-  external: true,
+  href: r.repo || undefined,
+  external: !!r.repo,
 }));
 ---
 
