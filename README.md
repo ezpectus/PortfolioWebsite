@@ -9,7 +9,7 @@ typographic design — paper background, one accent, hairline rules, every
 graphic hand-built inline SVG. No gradients, no stock imagery, no generated
 pictures.
 
-**Live:** <https://ezpectus.github.io/PortfolioWebsite/> ·
+**Live:** <https://denys-stepanenko.netlify.app/> ·
 Netlify mirror on `main`.
 
 ## What's inside
