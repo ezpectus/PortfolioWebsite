@@ -121,7 +121,7 @@ const artifacts = [
       the zones. The rule is simple: generation is cheap, correctness is not. AI gets the volume; I keep
       the parts where being wrong is expensive.
     </p>
-    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-2">
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-2" data-reveal>
       {
         zones.map((z) => (
           <div class="bg-paper p-6">
@@ -150,7 +150,7 @@ const artifacts = [
       Every generated diff runs the same gauntlet. The loop back from audit to rework is the point —
       most AI output fails it at least once, and that's the system working, not failing.
     </p>
-    <div class="dgm-scroll mt-8 border border-line p-6 sm:p-10">
+    <div class="dgm-scroll mt-8 border border-line p-6 sm:p-10" data-reveal>
       <PipelineDiagram />
     </div>
   </section>
@@ -179,6 +179,22 @@ const artifacts = [
     <p class="mono mt-4">
       then trace the data: if it's hardcoded on the way in, the service is fake.
     </p>
+
+    <div class="mt-8 border border-line p-6 sm:p-8" data-reveal>
+      <p class="mono text-accent-deep">a real find — S12, forgeai codebase</p>
+      <p class="mt-3 max-w-[64ch] font-mono text-[13px] leading-relaxed text-ink">
+        <code>POST /api/templates</code>: <code>body.id</code> and <code>body.type</code> flowed straight
+        into <code>join()</code> — zero sanitization. Result: path traversal with arbitrary <code
+          >.json</code
+        > write (could clobber <code>package.json</code>), forged index entries, and read-back
+        through the GET route. The code looked fine, the tests passed, the feature "worked". Found
+        by the census, fixed and documented.
+      </p>
+      <p class="mono mt-4">
+        receipts — 113 findings closed across 28 audit rounds on that codebase; a second private
+        SaaS board sits at 546 closed. Auditing AI output is a repeatable practice, not a one-off.
+      </p>
+    </div>
   </section>
 
   <!-- 04 / testing -->
@@ -188,7 +204,7 @@ const artifacts = [
       A guarantee isn't proven by one green run. Each boundary gets repeated rounds of adversarial
       cases — and during the runs I'm hunting weaknesses, not collecting checkmarks.
     </p>
-    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2" data-reveal>
       {
         testing.map((t) => (
           <div class="bg-paper p-6">
@@ -203,7 +219,7 @@ const artifacts = [
   <!-- 05 / artifacts -->
   <section class="mx-auto max-w-[1120px] px-5 pt-20">
     <SectionHead num="05" label="Artifacts" title="The receipts" />
-    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2" data-reveal>
       {
         artifacts.map((a) => (
           <div class="bg-paper p-6">

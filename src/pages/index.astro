@@ -99,11 +99,30 @@ const aiArtifacts = [
     </div>
   </section>
 
-  <div class="mx-auto max-w-[1120px] px-5">
+  <div class="mx-auto max-w-[1120px] px-5" data-reveal>
     <StatsStrip />
   </div>
 
-  <div class="mx-auto max-w-[1120px] px-5 pt-8">
+  <!-- what a company gets -->
+  <div class="mx-auto max-w-[1120px] px-5 pt-8" data-reveal>
+    <div class="grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+      {
+        [
+          ["ships end-to-end", "3 commercial client engagements delivered — Upwork, live URLs"],
+          ["owns correctness", "guarantee boundaries hand-written, chaos-tested, tested to fail"],
+          ["AI-leveraged, gated", "parallel agents + audit pipeline — velocity without slop"],
+          ["design-literate", "system-design docs ship with the code — decisions, not vibes"],
+        ].map(([k, v]) => (
+          <div class="bg-paper p-5">
+            <p class="mono">{k}</p>
+            <p class="mt-2 font-mono text-[13px] leading-relaxed text-ink">{v}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-[1120px] px-5 pt-8" data-reveal>
     <TimelineStrip />
   </div>
 
@@ -115,11 +134,11 @@ const aiArtifacts = [
       read, audited and pushed through a gate. The model gives speed; the process gives correctness.
     </p>
 
-    <div class="dgm-scroll mt-10 border border-line p-6 sm:p-10">
+    <div class="dgm-scroll mt-10 border border-line p-6 sm:p-10" data-reveal>
       <PipelineDiagram />
     </div>
 
-    <div class="grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-3" data-reveal>
       {
         aiArtifacts.map((a) => (
           <div class="bg-paper p-6">
@@ -151,7 +170,7 @@ const aiArtifacts = [
       Nine projects that show range: low-latency C++, .NET backends, frontend architecture, devtools
       — and AI used where it earns its tokens.
     </p>
-    <div class="mt-10">
+    <div class="mt-10" data-reveal>
       <WorkTable rows={workRows} numbered />
     </div>
     <a href={u("work/")} class="mono mt-6 inline-block text-accent-deep hover:underline">
@@ -162,7 +181,7 @@ const aiArtifacts = [
   <!-- 03 / about -->
   <section id="about" class="mx-auto max-w-[1120px] scroll-mt-8 px-5 pt-24">
     <SectionHead num="03" label="About" title="The short version" />
-    <div class="mt-6 grid grid-cols-1 gap-10 md:grid-cols-12">
+    <div class="mt-6 grid grid-cols-1 gap-10 md:grid-cols-12" data-reveal>
       <div class="space-y-4 md:col-span-7">
         <p class="text-base leading-relaxed text-ink">
           Backend-focused engineer with full-stack range — .NET, ASP.NET Core, PostgreSQL and Redis

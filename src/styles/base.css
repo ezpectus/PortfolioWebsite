@@ -197,6 +197,26 @@ body {
   fill: var(--color-ink);
 }
 
+/* scroll-reveal — gated behind .js so no-JS never hides content */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s ease-out;
+}
+.js [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* diagrams keep a readable min width — scroll sideways on small screens */
 .dgm-scroll {
   overflow-x: auto;

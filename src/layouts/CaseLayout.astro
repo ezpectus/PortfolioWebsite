@@ -14,7 +14,7 @@ const d = entry.data;
 
 <BaseLayout title={`${d.title} — Denys Stepanenko`} description={d.tagline}>
   <article class="mx-auto max-w-[1120px] px-5">
-    <header class="border-b border-line pb-10 pt-14">
+    <header class="border-b border-line pb-10 pt-14" data-reveal>
       <p class="mono">
         <a href={u("/#work")} class="hover:text-ink">← Selected work</a>
         <span class="mx-2">/</span>
@@ -80,7 +80,7 @@ const d = entry.data;
       </dl>
     </header>
 
-    <figure class="border-b border-line py-10">
+    <figure class="border-b border-line py-10" data-reveal>
       <figcaption class="mono mb-6">System diagram</figcaption>
       <div class="dgm-scroll">
         <Diagram name={d.diagram} />
