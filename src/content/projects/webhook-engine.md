@@ -1,7 +1,7 @@
 ---
 title: "Notification & Webhook Engine"
 year: "Oct–Nov 2026"
-role: "Core guarantees by hand; platform AI-assisted under contract"
+role: "System design & guarantee boundaries by hand; platform AI-assisted"
 stack: [".NET", "PostgreSQL + EF Core", "Redis", "SignalR", "React + TS", "docker-compose"]
 order: 9
 tagline: "At-least-once delivery engine — every guarantee boundary designed, implemented, then attacked with chaos failures until it held."
@@ -28,4 +28,4 @@ An event is persisted to Postgres before the API returns 202 — the row existin
 
 ## What it proves
 
-The final acceptance criterion: being able to answer _where a message can duplicate and why that's acceptable, where it can be lost and why that's not_. ~140 files, every decision and bug written down in `docs/`.
+The final acceptance criterion: being able to answer _where a message can duplicate and why that's acceptable, where it can be lost and why that's not_. ~140 files — decisions journaled as ADR notes in `PLAN.md`, architecture and walkthroughs in `docs/`.

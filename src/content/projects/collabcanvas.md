@@ -1,7 +1,7 @@
 ---
 title: "CollabCanvas"
 year: "Nov 2026"
-role: "Design & implementation"
+role: "System design & implementation"
 stack: [".NET 8", "SignalR", "Redis", "React + TS", "Canvas 2D", "docker-compose", "xUnit"]
 repo: "https://github.com/ezpectus/collabcanvas"
 order: 8
@@ -30,4 +30,4 @@ One stateful room process owns each document — it IS the ordering point. Clien
 
 ## What it proves
 
-Deliberate engineering under a deadline: the stack table in the README lists every rejected alternative and why. The doc admits what the MVP doesn't do — that's the same honesty I apply to AI output.
+Deliberate engineering under a deadline: `docs/architecture.md` writes the trade-offs down — the stack table lists every rejected alternative and why, and the split-brain window of the owner-claim model is documented, not hidden. The doc admits what the MVP doesn't do — that's the same honesty I apply to AI output.
