@@ -14,9 +14,14 @@ Netlify mirror on `main`.
 
 ## What's inside
 
-- 7 case studies with real project metrics pulled from the GitHub commits API
-- "How I work with AI" — spec → agent → review → slop audit → GuardDOG gate →
-  tests/CI → ship, with the rejection loop. AI writes the draft; I own the diff.
+- 9 case studies with real metrics pulled from the GitHub commits API —
+  dates are commit windows, not guesses; private repos are marked `private`
+  instead of linking a 404
+- `/ai` — a full method page: who writes what (the 50/50 AGENTS.md split),
+  the spec→agent→audit→gate pipeline, the actual slop-audit checklist,
+  chaos-test discipline, and the artifacts behind it (GuardDOG,
+  agents-workflow kit, per-repo contracts)
+- Commit-activity timeline on the homepage — Gantt-style windows per repo
 - Full project index (`/work`), second-tier archive, coursework fold
 - CV at `/cv/denys-stepanenko-cv.pdf`
 - The pipeline is part of the portfolio: typecheck → format → build →
@@ -45,11 +50,15 @@ npm run format     # prettier write
 
 ```
 src/
-  content/projects/*.md      case studies (zod-validated frontmatter)
+  content/projects/*.md      9 case studies (zod-validated frontmatter;
+                             repo optional — private projects render "private repo")
   data/site.json             profile, links, stats, second-tier archive
-  components/diagrams/*.astro hand-built SVG diagrams (one per case)
+  components/diagrams/*.astro 9 hand-built SVG diagrams (one per case)
+  components/TimelineStrip    commit-window timeline (GitHub API data)
+  components/WorkTable        project rows; href optional → "private" tag
   utils/url.ts               base-path helper ("/" or "/PortfolioWebsite/")
-public/cv/                   drop the CV PDF here
+  pages/ai/index.astro       the AI method page
+public/cv/                   drop the CV PDF here (currently v6.0)
 .github/workflows/ci.yml     check → build → Lighthouse → Pages deploy
 netlify.toml                 Netlify mirror config
 ```
@@ -71,5 +80,6 @@ Manual steps after push:
 - One accent `#E8480C`, used sparingly (<5% of area)
 - No gradients, glow shadows, glassmorphism, blobs
 - All diagrams are inline SVG, stroke-based, mono labels
+- No scroll-jacking — instant anchor navigation
 - `prefers-reduced-motion` fully respected
 - Lighthouse ≥95 across all categories — enforced in CI
