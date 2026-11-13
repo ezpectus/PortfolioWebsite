@@ -1,10 +1,16 @@
 ---
 import site from "../data/site.json";
+import { getPublicRepoCount } from "../utils/github";
+
+const repoCount = await getPublicRepoCount(44);
+const stats = site.stats.map((s) =>
+  s.label === "Public repositories" ? { ...s, value: String(repoCount) } : s,
+);
 ---
 
 <dl class="grid grid-cols-2 border border-line md:grid-cols-4">
   {
-    site.stats.map((s, i) => (
+    stats.map((s, i) => (
       <div
         class:list={[
           "px-5 py-6",

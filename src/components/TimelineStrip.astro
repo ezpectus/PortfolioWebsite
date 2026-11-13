@@ -1,6 +1,9 @@
 ---
-// commit windows + counts pulled from GitHub commits API on 2026-11-13
+// Static snapshot as fallback (pulled from the GitHub commits API on 2026-11-13);
+// each row is refreshed live at build time when the API answers.
 // index 0 = Jul 2025 … index 16 = Nov 2026
+import { getCommitWindow, monthIndex } from "../utils/github";
+
 const MONTHS = [
   "J",
   "A",
@@ -20,21 +23,38 @@ const MONTHS = [
   "O",
   "N",
 ];
-const rows = [
-  { label: "leetcode-solutions", s: 0, e: 13, c: "1,616" },
-  { label: "algorithm-patterns", s: 1, e: 12, c: "286" },
-  { label: "taskmanager", s: 6, e: 11, c: "54" },
-  { label: "videohub", s: 8, e: 10, c: "76" },
-  { label: "log-observability", s: 10, e: 11, c: "24" },
-  { label: "hft-simulator", s: 11, e: 14, c: "1,289" },
-  { label: "algo-visualiser", s: 12, e: 12, c: "3" },
-  { label: "student-portal", s: 12, e: 13, c: "58" },
-  { label: "fullstack-portfolio", s: 13, e: 13, c: "89" },
-  { label: "forgeai", s: 14, e: 14, c: "215" },
-  { label: "guarddog", s: 15, e: 15, c: "13" },
-  { label: "webhook-engine", s: 15, e: 16, c: "134" },
-  { label: "collabcanvas", s: 16, e: 16, c: "150" },
+const LAST = MONTHS.length - 1;
+const clamp = (i: number) => Math.min(Math.max(i, 0), LAST);
+
+const staticRows = [
+  { label: "leetcode-solutions", repo: "LeetCode-solutions", s: 0, e: 13, c: "1,616" },
+  { label: "algorithm-patterns", repo: "Algorithm-patterns", s: 1, e: 12, c: "286" },
+  { label: "taskmanager", repo: "TaskManager_App", s: 6, e: 11, c: "54" },
+  { label: "videohub", repo: "VideoHub", s: 8, e: 10, c: "76" },
+  { label: "log-observability", repo: "AI-Log-Observability-MVP", s: 10, e: 11, c: "24" },
+  { label: "hft-simulator", repo: "HFT-trading-simulator", s: 11, e: 14, c: "1,289" },
+  { label: "algo-visualiser", repo: "algo-visualiser", s: 12, e: 12, c: "3" },
+  { label: "student-portal", repo: "student-portal", s: 12, e: 13, c: "58" },
+  { label: "fullstack-portfolio", repo: "fullstack-portfolio", s: 13, e: 13, c: "89" },
+  { label: "forgeai", repo: "forgeai", s: 14, e: 14, c: "215" },
+  { label: "guarddog", repo: "GuardDOG", s: 15, e: 15, c: "13" },
+  { label: "webhook-engine", repo: "webhook-engine", s: 15, e: 16, c: "134" },
+  { label: "collabcanvas", repo: "collabcanvas", s: 16, e: 16, c: "150" },
 ];
+
+const rows = await Promise.all(
+  staticRows.map(async (r) => {
+    const w = await getCommitWindow(r.repo);
+    if (!w) return { label: r.label, s: r.s, e: r.e, c: r.c };
+    return {
+      label: r.label,
+      s: clamp(monthIndex(w.first)),
+      e: clamp(monthIndex(w.last)),
+      c: w.count.toLocaleString("en-GB"),
+    };
+  }),
+);
+rows.sort((a, b) => a.s - b.s || b.e - a.e);
 const X0 = 200;
 const X1 = 700;
 const M = (X1 - X0) / 17;

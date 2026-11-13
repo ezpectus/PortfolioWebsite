@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Diagram from "../components/Diagram.astro";
 import { u } from "../utils/url";
+import { getCommitWindow, repoFromUrl } from "../utils/github";
 
 interface Props {
   entry: CollectionEntry<"projects">;
@@ -12,6 +13,9 @@ interface Props {
 
 const { entry, prev, next } = Astro.props;
 const d = entry.data;
+const repo = repoFromUrl(d.repo);
+const live = repo ? await getCommitWindow(repo) : null;
+const commits = live?.count ?? d.commits;
 ---
 
 <BaseLayout title={`${d.title} — Denys Stepanenko`} description={d.tagline}>
@@ -37,12 +41,10 @@ const d = entry.data;
           <dd class="mt-1.5 text-sm font-medium text-ink">{d.role}</dd>
         </div>
         {
-          d.commits && (
+          commits && (
             <div>
               <dt class="mono">Commits</dt>
-              <dd class="mt-1.5 text-sm font-medium text-ink">
-                {d.commits.toLocaleString("en-GB")}
-              </dd>
+              <dd class="mt-1.5 text-sm font-medium text-ink">{commits.toLocaleString("en-GB")}</dd>
             </div>
           )
         }
