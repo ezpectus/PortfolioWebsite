@@ -6,9 +6,11 @@ import { u } from "../utils/url";
 
 interface Props {
   entry: CollectionEntry<"projects">;
+  prev?: CollectionEntry<"projects"> | undefined;
+  next?: CollectionEntry<"projects"> | undefined;
 }
 
-const { entry } = Astro.props;
+const { entry, prev, next } = Astro.props;
 const d = entry.data;
 ---
 
@@ -102,5 +104,33 @@ const d = entry.data;
         <slot />
       </div>
     </div>
+
+    <nav class="grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+      <div class="bg-paper p-5">
+        {
+          prev && (
+            <a href={u(`work/${prev.id}/`)} class="group block">
+              <p class="mono">← prev case</p>
+              <p class="mt-2 font-display text-base font-semibold tracking-tight text-ink group-hover:text-accent-deep">
+                {prev.data.title}
+              </p>
+            </a>
+          )
+        }
+      </div>
+      <div class="bg-paper p-5 sm:text-right">
+        {
+          next && (
+            <a href={u(`work/${next.id}/`)} class="group block">
+              <p class="mono">next case →</p>
+              <p class="mt-2 font-display text-base font-semibold tracking-tight text-ink group-hover:text-accent-deep">
+                {next.data.title}
+              </p>
+            </a>
+          )
+        }
+      </div>
+    </nav>
+    <div class="pb-24"></div>
   </article>
 </BaseLayout>

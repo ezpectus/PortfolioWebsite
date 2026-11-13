@@ -3,17 +3,17 @@ import { getCollection, render } from "astro:content";
 import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map((p) => ({
+  const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((p, i) => ({
     params: { slug: p.id },
-    props: { p },
+    props: { p, prev: projects[i - 1], next: projects[i + 1] },
   }));
 }
 
-const { p } = Astro.props;
+const { p, prev, next } = Astro.props;
 const { Content } = await render(p);
 ---
 
-<CaseLayout entry={p}>
+<CaseLayout entry={p} prev={prev} next={next}>
   <Content />
 </CaseLayout>
