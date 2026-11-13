@@ -1,0 +1,252 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import PipelineDiagram from "../../components/PipelineDiagram.astro";
+import site from "../../data/site.json";
+import { u } from "../../utils/url";
+
+const zones = [
+  {
+    who: "AI writes",
+    items: [
+      "Scaffolding, DI wiring, boilerplate",
+      "Migrations, dashboards, docker-compose",
+      "Docs, load generators, test harnesses",
+      "First drafts of anything reviewable",
+    ],
+  },
+  {
+    who: "I write",
+    items: [
+      "Idempotency and dedup boundaries",
+      "Retry scheduling, backoff, DLQ semantics",
+      "Backpressure and overflow policies",
+      "Transaction scopes and signing logic",
+      "Anything where a wrong answer costs more than no answer",
+    ],
+  },
+];
+
+const slopChecks = [
+  "Endpoints returning bare `dict` — no contract, count them",
+  "Functions returning the same value for any input — stubs",
+  "`random` inside service files — fake metrics, fake scores",
+  "`assert isinstance()` / `callable()` in tests — tests that verify nothing",
+  "`except Exception` without logging — silent failures",
+  "Module-level mutable globals — unbounded state",
+  "`# type: ignore` / `TODO` / `pass` bodies — the debt census",
+  "Flat directories, god files, README claims that don't survive a grep",
+];
+
+const testing = [
+  {
+    k: "rounds",
+    v: "Every boundary gets multiple rounds of cases, not one happy path — edge inputs, race timing, partial failures, replay.",
+  },
+  {
+    k: "chaos",
+    v: "Webhook engine ships a mock receiver with failure modes — 500 / 429 / slow / flap / drop — fired at the retry heap and DLQ until the guarantee holds.",
+  },
+  {
+    k: "hunt",
+    v: "Test runs are for finding weaknesses, not confirming the code works. A green suite that found nothing is a wasted round.",
+  },
+  {
+    k: "honest",
+    v: "Assertions check behaviour and invariants. A test that can't fail isn't a test — it goes in the slop count.",
+  },
+];
+
+const artifacts = [
+  {
+    label: "Tool · public",
+    title: "GuardDOG",
+    text: "The CI gate itself: regex + AST + optional LLM layers scanning for AI slop. Hash-cached per-file, exit codes for pipelines, markdown/JSON/HTML reports.",
+    href: "https://github.com/ezpectus/GuardDOG",
+    hrefLabel: "repo ↗",
+  },
+  {
+    label: "Kit · unpublished",
+    title: "agents-workflow",
+    text: "My deployable agent-workflow kit: per-repo adoption (small/mid/big), verified gate commands, session memory in .devin/, spec/tasks/audit templates.",
+    href: u("/#ai"),
+    hrefLabel: "this site's .devin →",
+  },
+  {
+    label: "Method · document",
+    title: "Slop audit",
+    text: "The checklist below written as a reusable workflow — drop it into any project, run the census, document findings.",
+    href: "#slop-audit",
+    hrefLabel: "the checklist ↓",
+  },
+  {
+    label: "Contract · per repo",
+    title: "AGENTS.md splits",
+    text: "Every AI-assisted project gets a written division of labor — like the webhook engine's 50/50 split: AI owns plumbing, I own guarantee boundaries.",
+    href: u("work/"),
+    hrefLabel: "see /work ↗",
+  },
+];
+---
+
+<BaseLayout
+  title="How I work with AI — Denys Stepanenko"
+  description="My AI-assisted development method: the pipeline, the review discipline, the testing rounds, and where the boundary between model and engineer sits."
+>
+  <div class="mx-auto max-w-[1120px] px-5 pt-14">
+    <p class="mono"><a href={u("/")} class="hover:text-ink">← Index</a> / AI method</p>
+    <h1 class="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+      How I work with AI
+    </h1>
+    <p class="mt-4 max-w-[62ch] text-base leading-relaxed text-muted">
+      I use AI agents daily — for generation, scaffolding and exploration. What I ship is what I've
+      read, audited and pushed through a gate. This page is the method, not a claim: the pipeline,
+      the audit checklist, the testing discipline, and exactly where the boundary sits between what
+      the model may write and what stays mine.
+    </p>
+    <p class="mt-6 font-display text-xl font-semibold tracking-tight text-ink">
+      “AI writes the draft. <span class="text-accent">I own the diff.</span>”
+    </p>
+  </div>
+
+  <!-- 01 / the split -->
+  <section class="mx-auto max-w-[1120px] px-5 pt-16">
+    <SectionHead num="01" label="Division of labor" title="Who writes what" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      Every AI-assisted project starts with a written contract — an <code>AGENTS.md</code> that names
+      the zones. The rule is simple: generation is cheap, correctness is not. AI gets the volume; I keep
+      the parts where being wrong is expensive.
+    </p>
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-2">
+      {
+        zones.map((z) => (
+          <div class="bg-paper p-6">
+            <p class="mono">{z.who}</p>
+            <ul class="mt-4 space-y-2">
+              {z.items.map((i) => (
+                <li class="border-b border-line pb-2 font-mono text-[13px] text-ink last:border-0">
+                  {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mono mt-4">
+      live example — the webhook engine's AGENTS.md: dedup, retries, rate limiting and DLQ are
+      hand-written; ASP.NET plumbing, SignalR, migrations and the React dashboard are agent work.
+    </p>
+  </section>
+
+  <!-- 02 / pipeline -->
+  <section class="mx-auto max-w-[1120px] px-5 pt-20">
+    <SectionHead num="02" label="Pipeline" title="Draft to ship" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      Every generated diff runs the same gauntlet. The loop back from audit to rework is the point —
+      most AI output fails it at least once, and that's the system working, not failing.
+    </p>
+    <div class="dgm-scroll mt-8 border border-line p-6 sm:p-10">
+      <PipelineDiagram />
+    </div>
+  </section>
+
+  <!-- 03 / slop audit -->
+  <section id="slop-audit" class="mx-auto max-w-[1120px] scroll-mt-8 px-5 pt-20">
+    <SectionHead num="03" label="Review" title="The slop audit" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      Standing assumption: <strong class="font-semibold text-ink"
+        >the code is hollow until proven otherwise.</strong
+      > AI output looks clean — plausible names, passing tests — while doing nothing underneath. So I
+      run a census, not a vibe check:
+    </p>
+    <ul class="mt-8 border-t border-line">
+      {
+        slopChecks.map((s, i) => (
+          <li class="grid grid-cols-12 items-baseline gap-x-4 border-b border-line py-3.5">
+            <span class="mono col-span-2 sm:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+            <span class="col-span-10 font-mono text-[13px] leading-relaxed text-ink sm:col-span-11">
+              {s}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mono mt-4">
+      then trace the data: if it's hardcoded on the way in, the service is fake.
+    </p>
+  </section>
+
+  <!-- 04 / testing -->
+  <section class="mx-auto max-w-[1120px] px-5 pt-20">
+    <SectionHead num="04" label="Testing" title="Rounds, not passes" />
+    <p class="mt-6 max-w-[62ch] text-base leading-relaxed text-ink">
+      A guarantee isn't proven by one green run. Each boundary gets repeated rounds of adversarial
+      cases — and during the runs I'm hunting weaknesses, not collecting checkmarks.
+    </p>
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+      {
+        testing.map((t) => (
+          <div class="bg-paper p-6">
+            <p class="mono">{t.k}</p>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{t.v}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 05 / artifacts -->
+  <section class="mx-auto max-w-[1120px] px-5 pt-20">
+    <SectionHead num="05" label="Artifacts" title="The receipts" />
+    <div class="mt-8 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+      {
+        artifacts.map((a) => (
+          <div class="bg-paper p-6">
+            <p class="mono">{a.label}</p>
+            <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink">
+              {a.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{a.text}</p>
+            <a href={a.href} class="mono mt-4 inline-block text-accent-deep hover:underline">
+              {a.hrefLabel}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 06 / contact -->
+  <section class="mx-auto max-w-[1120px] px-5 py-24">
+    <SectionHead num="06" label="Contact" title="Find me" />
+    <div class="mt-6 flex flex-col gap-4">
+      <div class="flex flex-wrap gap-x-8 gap-y-3">
+        <a
+          href={`mailto:${site.email}`}
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >{site.email} ↗</a
+        >
+        <a
+          href={site.links.linkedin}
+          rel="me"
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >LinkedIn ↗</a
+        >
+        <a
+          href={site.links.github}
+          rel="me"
+          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+          >GitHub ↗</a
+        >
+        <a href={u(site.cv)} class="mono hover:text-ink">CV ↓</a>
+      </div>
+      <p class="mono">
+        profiles ·
+        <a href={site.links.leetcode} rel="me" class="hover:text-ink">LeetCode ↗</a> ·
+        <a href={site.links.codeforces} rel="me" class="hover:text-ink">Codeforces ↗</a> ·
+        <a href={site.links.hackerrank} rel="me" class="hover:text-ink">HackerRank ↗</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

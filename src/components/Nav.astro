@@ -5,7 +5,7 @@ import { u } from "../utils/url";
 const path = Astro.url.pathname;
 const links = [
   { href: u("/#work"), label: "Work" },
-  { href: u("/#ai"), label: "AI workflow" },
+  { href: u("/ai/"), label: "AI method" },
   { href: u("/work/"), label: "Index" },
   { href: u("/#about"), label: "About" },
 ];
@@ -26,7 +26,8 @@ const links = [
             href={l.href}
             class:list={[
               "mono transition-colors hover:text-ink",
-              { "text-ink": l.href === "/work" && path.startsWith("/work") },
+              { "text-ink": l.href === u("/work/") && path.includes("/work") },
+              { "text-ink": l.href === u("/ai/") && path.includes("/ai/") },
             ]}
           >
             {l.label}
