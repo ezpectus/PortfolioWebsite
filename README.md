@@ -68,16 +68,19 @@ netlify.toml                 Netlify mirror config
 GitHub Pages serves project repos at `/<repo>/`, so the site is base-aware:
 CI sets `DEPLOY_BASE=/PortfolioWebsite`, Netlify/local builds use `/`.
 All internal links go through `u()` in `src/utils/url.ts`.
+`SITE_URL` sets the canonical host for sitemap/OG per environment.
 
 Manual steps after push:
 
 1. Repo → **Settings → Pages → Source: GitHub Actions**
 2. Netlify → **Add new site → Import from GitHub** → pick this repo —
-   `netlify.toml` handles the rest
+   `netlify.toml` handles the rest. Optional: create a Netlify
+   **build hook** and save it as the `NETLIFY_BUILD_HOOK` repo secret —
+   the weekly cron then refreshes stats on the mirror too.
 
 ## Design rules (enforced by review, not by linter)
 
-- One accent `#E8480C`, used sparingly (<5% of area)
+- One accent `#B44E23`, used sparingly (<5% of area)
 - No gradients, glow shadows, glassmorphism, blobs
 - All diagrams are inline SVG, stroke-based, mono labels
 - No scroll-jacking — instant anchor navigation

@@ -85,3 +85,9 @@ jobs:
       - uses: actions/configure-pages@v5
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: rebuild netlify mirror
+        # pushes already trigger Netlify; the weekly cron pings it here
+        if: github.event_name == 'schedule' && env.NETLIFY_BUILD_HOOK != ''
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: curl -fsSL -X POST "$NETLIFY_BUILD_HOOK"

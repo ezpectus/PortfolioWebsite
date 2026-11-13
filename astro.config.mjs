@@ -3,7 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://ezpectus.github.io",
+  // Canonical host — Netlify/override via SITE_URL; defaults to Pages.
+  site: process.env.SITE_URL ?? "https://ezpectus.github.io",
   // Pages serves project repos at /<repo>/ — CI sets DEPLOY_BASE=/PortfolioWebsite.
   // Netlify/local build with no env → base "/".
   base: process.env.DEPLOY_BASE ?? "/",
