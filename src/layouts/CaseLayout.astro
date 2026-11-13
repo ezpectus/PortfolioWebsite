@@ -51,9 +51,19 @@ const d = entry.data;
         <div>
           <dt class="mono">Links</dt>
           <dd class="mt-1.5 flex gap-4 text-sm font-medium">
-            <a href={d.repo} class="text-accent-deep underline underline-offset-4" rel="noopener"
-              >Repo ↗</a
-            >
+            {
+              d.repo ? (
+                <a
+                  href={d.repo}
+                  class="text-accent-deep underline underline-offset-4"
+                  rel="noopener"
+                >
+                  Repo ↗
+                </a>
+              ) : (
+                <span class="text-muted">private repo</span>
+              )
+            }
             {
               d.live && (
                 <a

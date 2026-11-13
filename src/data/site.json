@@ -17,23 +17,9 @@
     { "value": "3,200+", "label": "Algorithmic problems solved" },
     { "value": "43", "label": "Public repositories" },
     { "value": "1,600+", "label": "Commits in one repo" },
-    { "value": "7", "label": "Flagship builds" }
+    { "value": "9", "label": "Flagship builds" }
   ],
   "archive": [
-    {
-      "name": "collabcanvas",
-      "year": "Nov 2026",
-      "stack": ".NET 8 · SignalR · Redis · React",
-      "note": "Real-time collaborative canvas (Figma-like MVP) — op-protocol with LWW convergence, Redis journal + snapshots, roles/comments. 150 commits.",
-      "repo": "https://github.com/ezpectus/collabcanvas"
-    },
-    {
-      "name": "webhook-engine",
-      "year": "Oct–Nov 2026",
-      "stack": ".NET · PostgreSQL · Redis · SignalR · React",
-      "note": "At-least-once notification & webhook delivery engine — dedup boundary, backpressure, retry heap + DLQ, HMAC-signed hooks, chaos-tested. Unpublished. 134 commits.",
-      "repo": ""
-    },
     {
       "name": "infrastructure-tui",
       "year": "Jul 2026",

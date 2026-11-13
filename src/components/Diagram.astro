@@ -6,6 +6,8 @@ import HttpRangeDiagram from "./diagrams/HttpRangeDiagram.astro";
 import YamlGraphDiagram from "./diagrams/YamlGraphDiagram.astro";
 import ForgeDiagram from "./diagrams/ForgeDiagram.astro";
 import GuarddogDiagram from "./diagrams/GuarddogDiagram.astro";
+import CanvasDiagram from "./diagrams/CanvasDiagram.astro";
+import WebhookDiagram from "./diagrams/WebhookDiagram.astro";
 
 interface Props {
   name: string;
@@ -19,6 +21,8 @@ const map = {
   yamlgraph: YamlGraphDiagram,
   forge: ForgeDiagram,
   guarddog: GuarddogDiagram,
+  canvas: CanvasDiagram,
+  webhook: WebhookDiagram,
 } as const;
 
 const C = map[Astro.props.name as keyof typeof map] ?? HftDiagram;

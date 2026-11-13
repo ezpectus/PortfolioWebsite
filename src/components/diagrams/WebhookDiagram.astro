@@ -1,0 +1,80 @@
+<svg
+  viewBox="0 0 760 290"
+  class="h-auto w-full"
+  role="img"
+  aria-label="Webhook delivery pipeline: ingest, dedup boundary, bounded channel, rate-limited dispatch, signed delivery, retry heap and DLQ"
+>
+  <defs>
+    <marker id="arr-w" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- durability note -->
+  <rect x="20" y="18" width="180" height="34" class="dgm-box-mut"></rect>
+  <text x="110" y="32" text-anchor="middle" class="dgm dgm-ink">202 = persisted</text>
+  <text x="110" y="45" text-anchor="middle" class="dgm-sm">pg row before ack</text>
+
+  <!-- dlq -->
+  <rect x="560" y="200" width="140" height="52" class="dgm-box-mut"></rect>
+  <text x="630" y="220" text-anchor="middle" class="dgm dgm-ink">dlq</text>
+  <text x="630" y="236" text-anchor="middle" class="dgm-sm">exhausted → replayable</text>
+
+  {
+    [
+      { n: "01", label: "ingest", sub: "http + persist", acc: false },
+      { n: "02", label: "dedup", sub: "redis nx · pg unique", acc: true },
+      { n: "03", label: "channel", sub: "bounded · 503 full", acc: false },
+      { n: "04", label: "dispatch", sub: "token bucket", acc: false },
+      { n: "05", label: "deliver", sub: "hmac sha256 sign", acc: false },
+    ].map((s, i) => (
+      <g>
+        <text x={20 + i * 148 + 64} y="95" text-anchor="middle" class="dgm-sm">
+          {s.n}
+        </text>
+        <rect
+          x={20 + i * 148}
+          y="110"
+          width="128"
+          height="46"
+          class={s.acc ? "dgm-box-acc" : "dgm-box"}
+        />
+        <text x={20 + i * 148 + 64} y="130" text-anchor="middle" class="dgm dgm-ink">
+          {s.label}
+        </text>
+        <text x={20 + i * 148 + 64} y="145" text-anchor="middle" class="dgm-sm">
+          {s.sub}
+        </text>
+        {i < 4 && (
+          <line
+            x1={20 + i * 148 + 128}
+            y1="133"
+            x2={20 + (i + 1) * 148 - 4}
+            y2="133"
+            class="dgm-edge"
+            marker-end="url(#arr-w)"
+          />
+        )}
+      </g>
+    ))
+  }
+
+  <!-- ingest ← persist note -->
+  <path d="M 110 52 L 110 106" class="dgm-dash" marker-end="url(#arr-w)"></path>
+
+  <!-- deliver → retry heap → channel -->
+  <path d="M 676 156 L 676 182 L 380 182 L 380 160" class="dgm-dash" marker-end="url(#arr-w)"
+  ></path>
+  <text x="528" y="176" text-anchor="middle" class="dgm-sm">
+    retry heap · backoff + jitter · durable schedule
+  </text>
+
+  <!-- deliver → dlq -->
+  <path d="M 690 156 L 690 196" class="dgm-dash" marker-end="url(#arr-w)"></path>
+
+  <!-- footer -->
+  <text x="20" y="278" class="dgm-sm"
+    >at-least-once by design — duplicates acceptable, loss is not · chaos-tested:
+    500/429/slow/flap/drop</text
+  >
+</svg>

@@ -1,0 +1,65 @@
+<svg
+  viewBox="0 0 760 270"
+  class="h-auto w-full"
+  role="img"
+  aria-label="CollabCanvas op flow: optimistic client, SignalR hub, owner room ordering point, Redis stream journal, broadcast fan-out"
+>
+  <defs>
+    <marker id="arr-c" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#141414" stroke-width="1"></path>
+    </marker>
+  </defs>
+
+  <!-- clients -->
+  <rect x="20" y="86" width="130" height="52" class="dgm-box"></rect>
+  <text x="85" y="106" text-anchor="middle" class="dgm dgm-ink">client</text>
+  <text x="85" y="122" text-anchor="middle" class="dgm-sm">optimistic apply</text>
+
+  <rect x="20" y="170" width="130" height="52" class="dgm-box"></rect>
+  <text x="85" y="190" text-anchor="middle" class="dgm dgm-ink">client</text>
+  <text x="85" y="206" text-anchor="middle" class="dgm-sm">remote cursors</text>
+
+  <!-- hub -->
+  <rect x="208" y="86" width="130" height="52" class="dgm-box"></rect>
+  <text x="273" y="106" text-anchor="middle" class="dgm dgm-ink">signalr hub</text>
+  <text x="273" y="122" text-anchor="middle" class="dgm-sm">submitop / invoke</text>
+
+  <!-- room = ordering point (accent) -->
+  <rect x="396" y="70" width="150" height="84" class="dgm-box-acc"></rect>
+  <text x="471" y="92" text-anchor="middle" class="dgm dgm-ink">room</text>
+  <text x="471" y="108" text-anchor="middle" class="dgm-sm">ordering point</text>
+  <text x="471" y="124" text-anchor="middle" class="dgm-sm">lock → dedup → seq</text>
+  <text x="471" y="140" text-anchor="middle" class="dgm-sm">apply (idempotent)</text>
+
+  <!-- redis journal -->
+  <rect x="604" y="18" width="140" height="52" class="dgm-box-mut"></rect>
+  <text x="674" y="38" text-anchor="middle" class="dgm dgm-ink">redis stream</text>
+  <text x="674" y="54" text-anchor="middle" class="dgm-sm">doc:ops journal</text>
+
+  <rect x="604" y="86" width="140" height="52" class="dgm-box-mut"></rect>
+  <text x="674" y="106" text-anchor="middle" class="dgm dgm-ink">snapshots</text>
+  <text x="674" y="122" text-anchor="middle" class="dgm-sm">every 100 ops</text>
+
+  <!-- doc:out fan-out -->
+  <rect x="604" y="170" width="140" height="52" class="dgm-box-mut"></rect>
+  <text x="674" y="190" text-anchor="middle" class="dgm dgm-ink">doc:out pub/sub</text>
+  <text x="674" y="206" text-anchor="middle" class="dgm-sm">cross-instance</text>
+
+  <!-- edges -->
+  <line x1="150" y1="112" x2="204" y2="112" class="dgm-edge" marker-end="url(#arr-c)"></line>
+  <line x1="338" y1="112" x2="392" y2="112" class="dgm-edge" marker-end="url(#arr-c)"></line>
+  <path d="M 471 70 L 471 44 L 600 44" class="dgm-edge" marker-end="url(#arr-c)"></path>
+  <path d="M 546 112 L 600 112" class="dgm-edge" marker-end="url(#arr-c)"></path>
+  <path d="M 471 154 L 471 196 L 600 196" class="dgm-edge" marker-end="url(#arr-c)"></path>
+  <path d="M 604 196 L 338 196 L 154 196" class="dgm-dash" marker-end="url(#arr-c)"></path>
+
+  <!-- non-owner forward -->
+  <text x="273" y="152" text-anchor="middle" class="dgm-sm">non-owner? → pub/sub to owner</text>
+
+  <!-- footer -->
+  <text x="20" y="248" class="dgm-sm"
+    >lww per-prop registers · fractional-index z-order · snapshot + replay tail on restart ·
+    owner-per-doc redis claim</text
+  >
+  <line x1="20" y1="258" x2="740" y2="258" class="dgm-line"></line>
+</svg>
