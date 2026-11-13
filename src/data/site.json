@@ -112,6 +112,27 @@
       "repo": "https://github.com/ezpectus/CodeForces-Solutions_CPP-17"
     },
     {
+      "name": "Software-Design-Patterns",
+      "year": "Mar–Aug 2026",
+      "stack": "C++ · C#",
+      "note": "Design patterns implemented from scratch — where each belongs and why. 209 commits.",
+      "repo": "https://github.com/ezpectus/Software-Design-Patterns"
+    },
+    {
+      "name": "Algo-Visualiser-WASM",
+      "year": "May–Jul 2026",
+      "stack": "Rust/WASM · React · TS",
+      "note": "Rust/WASM-core variant of the visualiser — same ExecutionStep contract, 120+ algorithms. 96 commits.",
+      "repo": "https://github.com/ezpectus/Algo-Visualiser-WASM"
+    },
+    {
+      "name": "async-data-toolkit",
+      "year": "Mar–May 2026",
+      "stack": "Node.js · JavaScript",
+      "note": "Async patterns consolidated into one toolkit — generators, memoization, priority queues, streams. 59 commits.",
+      "repo": "https://github.com/ezpectus/async-data-toolkit"
+    },
+    {
       "name": "coursework",
       "year": "Sep 2026 — active",
       "stack": "C++ · C# · SQL · Mermaid",

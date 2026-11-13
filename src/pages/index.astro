@@ -224,24 +224,32 @@ const aiArtifacts = [
         </p>
         <p class="mono mt-3">Authorized to work in the UK — no sponsorship required</p>
       </div>
-      <div class="flex flex-wrap gap-x-8 gap-y-3">
-        <a
-          href={`mailto:${site.email}`}
-          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
-          >{site.email} ↗</a
-        >
-        <a
-          href={site.links.linkedin}
-          rel="me"
-          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
-          >LinkedIn ↗</a
-        >
-        <a
-          href={site.links.github}
-          rel="me"
-          class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
-          >GitHub ↗</a
-        >
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-wrap gap-x-8 gap-y-3">
+          <a
+            href={`mailto:${site.email}`}
+            class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+            >{site.email} ↗</a
+          >
+          <a
+            href={site.links.linkedin}
+            rel="me"
+            class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+            >LinkedIn ↗</a
+          >
+          <a
+            href={site.links.github}
+            rel="me"
+            class="border-b-2 border-accent pb-0.5 font-display text-base font-semibold text-ink transition-colors hover:text-accent-deep"
+            >GitHub ↗</a
+          >
+        </div>
+        <p class="mono">
+          profiles ·
+          <a href={site.links.leetcode} rel="me" class="hover:text-ink">LeetCode ↗</a> ·
+          <a href={site.links.codeforces} rel="me" class="hover:text-ink">Codeforces ↗</a> ·
+          <a href={site.links.hackerrank} rel="me" class="hover:text-ink">HackerRank ↗</a>
+        </p>
       </div>
     </div>
   </section>
