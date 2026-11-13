@@ -30,6 +30,7 @@ A C++20 signal engine sits at the core, exchanging data with a Python research l
 - **75+ quantitative models**: GARCH, Kalman filters, Almgren–Chriss optimal execution, and more — each validated, not stubbed.
 - **ONNX ML inference in C++** — trained models run inside the engine, not in a Python sidecar.
 - **FIX 4.4 protocol** support — the wire format real markets speak.
+- **AI-assisted hot-path tuning** — model-suggested memory-layout and cache-line tweaks on hand-written C++ were benchmarked and adopted where they measured faster; the rest were rejected.
 
 ## What it proves
 

@@ -3,6 +3,7 @@ title: "Notification & Webhook Engine"
 year: "Oct–Nov 2026"
 role: "System design & guarantee boundaries by hand; platform AI-assisted"
 stack: [".NET", "PostgreSQL + EF Core", "Redis", "SignalR", "React + TS", "docker-compose"]
+repo: "https://github.com/ezpectus/webhook-engine"
 order: 9
 tagline: "At-least-once delivery engine — every guarantee boundary designed, implemented, then attacked with chaos failures until it held."
 metric: "134 commits · dedup boundary · retry heap + DLQ · chaos-tested"

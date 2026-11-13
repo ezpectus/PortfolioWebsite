@@ -1,7 +1,6 @@
 ---
 // commit windows + counts pulled from GitHub commits API on 2026-11-13
 // index 0 = Jul 2025 … index 16 = Nov 2026
-// webhook-engine bar = local git history (unpublished repo)
 const MONTHS = [
   "J",
   "A",
@@ -33,7 +32,7 @@ const rows = [
   { label: "fullstack-portfolio", s: 13, e: 13, c: "89" },
   { label: "forgeai", s: 14, e: 14, c: "215" },
   { label: "guarddog", s: 15, e: 15, c: "13" },
-  { label: "webhook-engine", s: 15, e: 16, c: "134*" },
+  { label: "webhook-engine", s: 15, e: 16, c: "134" },
   { label: "collabcanvas", s: 16, e: 16, c: "150" },
 ];
 const X0 = 200;
@@ -92,6 +91,6 @@ const bottom = y(rows.length - 1) + 10;
     </svg>
   </div>
   <figcaption class="mono mt-4">
-    Commit windows per repo — first to last commit, GitHub API · Nov 2026 · *local history
+    Commit windows per repo — first to last commit, GitHub API · Nov 2026
   </figcaption>
 </figure>

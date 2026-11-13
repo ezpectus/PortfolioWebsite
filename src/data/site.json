@@ -15,7 +15,7 @@
   },
   "stats": [
     { "value": "3,200+", "label": "Algorithmic problems solved" },
-    { "value": "43", "label": "Public repositories" },
+    { "value": "44", "label": "Public repositories" },
     { "value": "1,600+", "label": "Commits in one repo" },
     { "value": "9", "label": "Flagship builds" }
   ],
